@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.ndimage import map_coordinates
 
 def generate_permutation(n):
     perm = np.arange(n, dtype=np.int32)
@@ -64,3 +65,34 @@ def perlin(X, Y, scale=10, octaves=1, persistence=0.5, lacunarity=2.0, seed=None
     noise = (noise - noise.min()) / (noise.max() - noise.min())
     
     return noise
+
+
+def warp(heightmap, shape, warp_strength=2.0, seed=0):
+    """Warp the input heightmap to create a more organic look."""
+    height, width = shape[0], shape[1]
+    y, x = np.meshgrid(np.arange(height), np.arange(width), indexing='ij')
+    
+    # Normalize coordinates to [0, 1] range
+    x = x / width
+    y = y / height
+    
+    # First warping
+    qx = perlin(width, height, scale=100, seed=seed)
+    qy = perlin(width, height, scale=100, seed=seed+1)
+    
+    # Second warping
+    rx = perlin(width, height, scale=50, seed=seed+2) * 4.0 * qx + 1.7
+    ry = perlin(width, height, scale=50, seed=seed+3) * 4.0 * qy + 9.2
+    
+    # Final warping
+    warped_x = x + warp_strength * rx
+    warped_y = y + warp_strength * ry
+    
+    # Clip coordinates to ensure they're within the valid range
+    warped_x = np.clip(warped_x * (width - 1), 0, width - 1)
+    warped_y = np.clip(warped_y * (height - 1), 0, height - 1)
+
+    # Use cubic interpolation with "reflect" mode to sample the warped heightmap
+    warped_heightmap = map_coordinates(heightmap, [warped_y, warped_x], order=3, mode="reflect")
+    
+    return warped_heightmap

@@ -1,5 +1,5 @@
 from terra.tess import Voronoi
-from terra.random import perlin
+from terra.random import perlin, warp
 from terra.render import gaussian_blur, lingrad
 import matplotlib.pyplot as plt
 import numpy as np
@@ -17,7 +17,7 @@ tesselation.show()
 # Generate a basic fBm heightmap using Perlin noise.
 heightmap = perlin(X, Y, scale=250, octaves=1, seed=S)
 plt.figure(figsize=(10, 10))
-plt.imshow(heightmap, cmap='terrain')
+plt.imshow(heightmap, cmap='Greys_r')
 plt.show()
 
 def tess_heightmap(tesselation, heightmap):
@@ -53,21 +53,28 @@ def tess_heightmap(tesselation, heightmap):
 # Create a heightmap where each cell is assigned the average height of the corresponding region
 plate_heightmap = tess_heightmap(tesselation, heightmap)
 plt.figure(figsize=(10, 10))
-plt.imshow(plate_heightmap, cmap='terrain')
+plt.imshow(plate_heightmap, cmap='Greys_r')
 plt.show()
 
 # Apply Gaussian blur to smooth the heightmap and add details with Perlin noise
 heightmap = gaussian_blur(plate_heightmap, sigma=3) + 0.5*perlin(X, Y, scale=100, octaves=5, seed=S)
 plt.figure(figsize=(10, 10))
-plt.imshow(heightmap, cmap='terrain')
+plt.imshow(heightmap, cmap='Greys_r')
 plt.show()
+
+# Warp the height map
+heightmap = warp(heightmap, shape=(X, Y), warp_strength=2.0, seed=S+3)
+plt.figure(figsize=(10, 10))
+plt.imshow(heightmap, cmap='Greys_r')
+plt.show()
+
 
 # Show the 3D plot of the heightmap
 fig = plt.figure(figsize=(10, 10))
 ax = fig.add_subplot(111, projection='3d')
-ax.plot_surface(*np.meshgrid(range(X), range(Y)), heightmap, cmap='terrain')
+ax.plot_surface(*np.meshgrid(range(X), range(Y)), heightmap, cmap='Greys_r')
 plt.show()
-
+"""
 # Create a linear gradient temperature map.
 linear_tempmap = lingrad(X, Y, start=(X/2,0,30), end=(X/2,Y, -10))
 # The greater the height, the colder the temperature.
@@ -86,7 +93,7 @@ plt.figure(figsize=(10, 10))
 plt.imshow(precipationmap, cmap='Blues')
 plt.show()
 
-
+"""
 # Define biome classification based on Whittaker diagram
 def classify_biome_cell(temperature, precipitation):
     """
@@ -142,10 +149,11 @@ def classify_biomes(temperaturemap, precipitationmap):
     for y in range(Y):
         for x in range(X):
             temperature = temperaturemap[y, x]
-            precipitation = precipationmap[y, x]
+            precipitation = precipitationmap[y, x]
             biome = classify_biome_cell(temperature, precipitation)
             biome_map[y, x] = biome
     return biome_map
+"""
 
 # Define the colormap for the biomes
 from matplotlib.colors import ListedColormap
@@ -172,10 +180,12 @@ plt.imshow(biome_map, cmap=biome_cmap)
 plt.show()
 
 # Warp the biome map
+biome_map = warp(biome_map, shape=(X, Y), warp_strength=2.0, seed=S+4)
+plt.figure(figsize=(10, 10))
+plt.imshow(biome_map, cmap=biome_cmap)
+plt.show()
 
-
-
-
+"""
 
 
 
