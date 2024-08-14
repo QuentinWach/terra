@@ -68,19 +68,124 @@ ax = fig.add_subplot(111, projection='3d')
 ax.plot_surface(*np.meshgrid(range(X), range(Y)), heightmap, cmap='terrain')
 plt.show()
 
-# Create a linear gradient temperature map
-temperaturemap = lingrad(X, Y, start=(X/2,0,40), end=(X/2,Y, -40))
+# Create a linear gradient temperature map.
+linear_tempmap = lingrad(X, Y, start=(X/2,0,30), end=(X/2,Y, -10))
+# The greater the height, the colder the temperature.
+# Adjust the temperature by subtracting a fraction of the heightmap
+# This models the temperature decrease with altitude.
+temperaturemap = 30 - 25*heightmap
+
 plt.figure(figsize=(10, 10))
 plt.imshow(temperaturemap, cmap='coolwarm')
+plt.colorbar()
 plt.show()
 
 # Create a noisy precipitation map
-precipationmap = perlin(X, Y, scale=500, octaves=1, seed=S+3)
+precipationmap = 400 * perlin(X, Y, scale=500, octaves=1, seed=S+3)
 plt.figure(figsize=(10, 10))
 plt.imshow(precipationmap, cmap='Blues')
 plt.show()
 
+
+# Define biome classification based on Whittaker diagram
+def classify_biome_cell(temperature, precipitation):
+    """
+    Create bioms based on the height, temperature and precipitation maps using a simple rule-based system
+    Whittaker diagram: https://en.wikipedia.org/wiki/Whittaker_diagram
+    """
+    # Tundra
+    if temperature <= 0:
+        return 1
+    # Temperate grassland
+    elif temperature > 0 and temperature <= 20 and precipitation < 50:
+        return 2
+    # Subtropical desert
+    elif temperature > 20 and precipitation < 50:
+        return 3
+    elif temperature > 25 and precipitation < 100:
+        return 3
+    # Boreal forest
+    elif temperature > 0 and temperature <= 5 and precipitation >= 50 and precipitation < 150:
+        return 4
+    elif temperature > 5 and temperature <= 10 and precipitation >= 100 and precipitation < 200:
+        return 4
+    # Woodland / scrupland
+    elif temperature > 5 and temperature <= 20 and precipitation >= 50 and precipitation < 100:
+        return 5
+    # Temperate seasonal forest
+    elif temperature > 10 and temperature <= 20 and precipitation >= 100 and precipitation < 200:
+        return 6
+    # Tropical seasonal forest
+    elif temperature > 20 and precipitation >= 100 and precipitation < 250:
+        return 7
+    elif temperature > 20 and temperature <= 25 and precipitation >= 50 and precipitation < 100:
+        return 7
+    elif temperature > 25 and precipitation >= 250 and precipitation < 300:
+        return 7
+    # Tropical rainforest
+    elif temperature > 20 and temperature <= 25 and precipitation >= 250:
+        return 8
+    elif temperature > 25 and precipitation >= 300:
+        return 8
+    # Temperate rainforest
+    elif temperature > 10 and temperature <= 20 and precipitation >= 200:
+        return 9
+    
+# Classify biomes based on temperature, and precipitation.
+def classify_biomes(temperaturemap, precipitationmap):
+    # Check if the dimensions of the maps are the same.
+    assert temperaturemap.shape == precipitationmap.shape
+    Y, X = temperaturemap.shape
+    # Create an empty biome map.
+    biome_map = np.zeros((Y, X))
+    # Classify biomes for each cell in the maps.
+    for y in range(Y):
+        for x in range(X):
+            temperature = temperaturemap[y, x]
+            precipitation = precipationmap[y, x]
+            biome = classify_biome_cell(temperature, precipitation)
+            biome_map[y, x] = biome
+    return biome_map
+
+# Define the colormap for the biomes
+from matplotlib.colors import ListedColormap
+# Define the RGB values for each biome and normalize them to [0, 1]
+biome_colors = {
+    1: (148/255, 168/255, 174/255),  # Tundra
+    2: (147/255, 127/255, 44/255),   # Temperate grassland/cold desert
+    3: (201/255, 114/255, 52/255),   # Subtropical desert
+    4: (91/255, 144/255, 81/255),    # Boreal forest
+    5: (180/255, 125/255, 1/255),    # Woodland/shrubland
+    6: (40/255, 138/255, 161/255),   # Temperate seasonal forest
+    7: (152/255, 166/255, 34/255),   # Tropical seasonal forest
+    8: (1/255, 82/255, 44/255),      # Tropical rainforest
+    9: (3/255, 83/255, 109/255)      # Temperate rainforest
+}
+# Create a list of colors sorted by biome ID
+sorted_biome_colors = [biome_colors[i] for i in sorted(biome_colors.keys())]
+# Create the colormap
+biome_cmap = ListedColormap(sorted_biome_colors)
+# Createa a biome cmap
+biome_map = classify_biomes(temperaturemap, precipationmap)
+plt.figure(figsize=(10, 10))
+plt.imshow(biome_map, cmap=biome_cmap)
+plt.show()
+
+# Warp the biome map
+
+
+
+
+
+
+
+
+
+# Erode the heightmap using the thermal and hydraulic erosion algorithms
 #height = sim.errode(heightmap, temperaturemap, precipationmap, drops=X*Y//10, dropsize=X*Y//10)
+
+
+# Create snow map and apply it with slight elevation to the heightmap
 
 #texture = ...
 

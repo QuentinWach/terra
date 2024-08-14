@@ -21,6 +21,10 @@ Get started with:
 pip install terra
 ```
 
+|![alt text](docs/workflow.png)|
+| :--: |
+| Example workflow of creating a terrain. |
+
 ## 🎁 Examples
 ### 1. Map of a Continent with Various Biomes
 | |
@@ -70,21 +74,22 @@ tesselate
 ```
 
 
+|![alt text](docs/biomes.png)|
+| :--: |
+| **Climate Influence On Terrestrial Biome** by Navarras - Own work, CC0, https://commons.wikimedia.org/w/index.php?curid=61120531 |
+
+
 ## 📝 Documentation
 ### Randomness `random`
-+ [ ] Normal
-+ [ ] Perlin
-+ [ ] Fractal Perlin
-+ [ ] Brownian
-+ [ ] Fractal Brownian Motion (FBM)
++ [X] Normal Distribution
++ [X] Perlin Noise
++ [X] Fractal Perlin Noise
 ### Tesselation `tess`
-+ [ ] Voronoi (using Fortune's algorithm)
-  + [ ] Add relaxation method.
-  + [ ] Add bounding box polygon method to only generate voronoi cells within that polygon.
++ [X] Voronoi Tesselation + Fortune's Algorithm for Even Spacing
 + [ ] Meshing to create 3D objects
-+ [ ] Whittaker diagram
++ [X] Whittaker diagram
 ### Rendering `render`
-+ [ ] Linear Gradient
++ [X] Linear Gradient
 + [ ] Radial Gradient
 + [ ] Masks
 + [ ] Colormaps
@@ -92,7 +97,7 @@ tesselate
 + [ ] 2D Cartography Map Generator
 + [ ] Import (i.e. to import images to be used as height maps, filters, assets etc.)
 + [ ] Export (i.e. to generate a 3D file and render it in Blender)
-+ [ ] Render `render(height, color, material, style="real", sun="low-east")`
++ [ ] Render
 ### 2D/3D Assets `assets`
 + [ ] Crators
 + [ ] Mountains
@@ -101,9 +106,8 @@ tesselate
 + [ ] Rivers
 + [ ] Lakes
 ### Simulation `sim`
-+ [ ] Tectonic Plate Simulation (via pressure flow and collision)
-+ [ ] Stone Levels
-+ [ ] Brownian Mountains
++ [X] Stone Levels
++ [X] Brownian Mountains
 + [ ] Domain Warping
 + [ ] Hydraulic Terrain Erosion
 + [ ] Object Scattering (e.g. rocks)
