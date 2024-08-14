@@ -1,7 +1,7 @@
-from base import *
-from perlin import *
-from erosion import *
-from colormaps import *
+from terra.base import *
+from terra.perlin import *
+from terra.erosion import *
+from terra.colormaps import *
 
 if __name__ == '__main__':
     np.random.seed(42)

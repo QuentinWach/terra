@@ -107,7 +107,7 @@ def fbm(x, y, frequency=2, octaves=6, persistence=0.5, lacunarity=2.0, seed=0):
     """Generate fractal Brownian motion at (x, y)."""
     value = np.zeros_like(x)
     amplitude = 0.5
-    from perlin import generate_perlin_noise_2d
+    from terra.perlin import generate_perlin_noise_2d
     for i in range(octaves):
         value += amplitude * generate_perlin_noise_2d(x * frequency, y * frequency, seed + i)
         amplitude *= persistence

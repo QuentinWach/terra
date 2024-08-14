@@ -113,7 +113,7 @@ def erosion_line_plot(erosion_lines):
 
 if __name__ == '__main__':
     from base import *
-    from perlin import *
+    from terra.perlin import *
 
     np.random.seed(69)
     shape = (1024//2, 1024//2)
