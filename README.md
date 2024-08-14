@@ -7,7 +7,7 @@
 Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 <h3>
 
-[Examples](#examples) ▪ [Documentation](#documentation)
+[Examples](#-examples) ▪ [Features](#-features)
 </h3>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/QuentinWach/meteor)](https://github.com/QuentinWach/meteor/stargazers)
@@ -44,6 +44,8 @@ texture =
 material =
 export_to_png("example_1", height, texture, material)
 ```
+
+<!--
 ---
 ### 2. The Great Mountain
 | |
@@ -72,32 +74,29 @@ WIDTH = 500; HEIGHT = 500
 tesselate
 
 ```
-
-
 |![alt text](docs/biomes.png)|
 | :--: |
 | **Climate Influence On Terrestrial Biome** by Navarras - Own work, CC0, https://commons.wikimedia.org/w/index.php?curid=61120531 |
+-->
 
-
-## 📝 Documentation
+## 📝 Features
 ### Randomness `random`
 + [X] Normal Distribution
 + [X] Perlin Noise
 + [X] Fractal Perlin Noise
 ### Tesselation `tess`
 + [X] Voronoi Tesselation + Fortune's Algorithm for Even Spacing
-+ [ ] Meshing to create 3D objects
 + [X] Whittaker diagram
++ [ ] Meshing to create 3D objects
 ### Rendering `render`
 + [X] Linear Gradient
 + [ ] Radial Gradient
 + [ ] Masks
-+ [ ] Colormaps
++ [X] Colormaps
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
 + [ ] 2D Cartography Map Generator
 + [ ] Import (i.e. to import images to be used as height maps, filters, assets etc.)
-+ [ ] Export (i.e. to generate a 3D file and render it in Blender)
-+ [ ] Render
++ [ ] 2D Map Export (i.e. to generate a 3D file and render it in Blender)
 ### 2D/3D Assets `assets`
 + [ ] Crators
 + [ ] Mountains
@@ -108,15 +107,13 @@ tesselate
 ### Simulation `sim`
 + [X] Stone Levels
 + [X] Brownian Mountains
-+ [ ] Domain Warping
-+ [ ] Hydraulic Terrain Erosion
++ [ ] TODO: Domain Warping
++ [ ] TODO: Hydraulic Terrain Erosion
 + [ ] Object Scattering (e.g. rocks)
-+ [ ] River Networking
-+ [ ] River Simulation
-+ [ ] Snow deposition 
++ [ ] River Networks
++ [ ] River Dynamics Simulation & Erosion
++ [ ] Snow Deposition
 
 ---
 ## 🤝🏻 Contribute
-Leave your mark and add to this Python library! You know how it goes. You found a bug? Add an issue. Any ideas for improvement or feeling the need to add more features? Clone the repository, make the changes, and submit a pull request!
-
-I think, making a cheap if not entirely free terrain generator with a great GUI would be nice.
+There is much to do! I think, making a cheap if not entirely free terrain generator with a great GUI would be nice. Leave your mark and add to this Python library! You know how it goes. You found a bug? Add an issue. Any ideas for improvement or feeling the need to add more features? Clone the repository, make the changes, and submit a pull request!
