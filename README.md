@@ -11,8 +11,8 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 </h3>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Repo stars](https://img.shields.io/github/stars/QuentinWach/meteor)](https://github.com/QuentinWach/meteor/stargazers)
-[![GitHub latest commit](https://badgen.net/github/last-commit/QuentinWach/meteor)](https://github.com/QuentinWach/meteor/commits/main)
+[![GitHub Repo stars](https://img.shields.io/github/stars/QuentinWach/terra)](https://github.com/QuentinWach/terra/stargazers)
+[![GitHub latest commit](https://badgen.net/github/last-commit/QuentinWach/terra)](https://github.com/QuentinWach/terra/commits/main)
 <!--[![Discord](https://img.shields.io/discord/1068976834382925865)](https://discord.gg/ZjZadyC7PK)-->
 
 **_Terra_ provides you with various physics simulations, tesselations, filters, presets, and more to generate realistic terrains.** (It's pretty bad right now but getting better!)
@@ -145,6 +145,8 @@ The [example shown above](#example) involved various steps. With very few functi
 
 ---
 ## 🤝🏻 Contribute
-**There is much to do!** At this point, Terra is pretty much just educational. But it doesn't have to be. Leave your mark and add to this Python library! You know how it goes. You found a bug? Add an issue. Any ideas for improvement or feeling the need to add more features? Clone the repository, make the changes, and submit a pull request!
+**There is much to do!** At this point, Terra is pretty much just educational. But it doesn't have to be. Leave your mark and add to this Python library! You know how it goes. You found a bug? Add an issue. Any ideas for improvement or feeling the need to add more features? Clone the repository, make the changes, and submit a pull request, or...
+
+> **Leave a ⭐ to show your support!**
 
 [_MIT License_](LICENSE.txt)
