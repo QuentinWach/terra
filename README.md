@@ -1,6 +1,6 @@
 <div align="center">
 
-**The tiny terrain gen toolkit.**
+**The tiny terrain generator.**
 <picture>
   <img class=head src="docs/terra_header.png">
 </picture>
@@ -14,9 +14,11 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 [![GitHub Repo stars](https://img.shields.io/github/stars/QuentinWach/meteor)](https://github.com/QuentinWach/meteor/stargazers)
 [![GitHub latest commit](https://badgen.net/github/last-commit/QuentinWach/meteor)](https://github.com/QuentinWach/meteor/commits/main)
 <!--[![Discord](https://img.shields.io/discord/1068976834382925865)](https://discord.gg/ZjZadyC7PK)-->
-</div>
 
 **_Terra_ provides you with various physics simulations, heuristics, filters, presets, and more to generate realistic terrains.** 
+
+</div>
+
 <!--
 Get started with:
 ```
