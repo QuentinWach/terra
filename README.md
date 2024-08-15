@@ -15,7 +15,7 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 [![GitHub latest commit](https://badgen.net/github/last-commit/QuentinWach/meteor)](https://github.com/QuentinWach/meteor/commits/main)
 <!--[![Discord](https://img.shields.io/discord/1068976834382925865)](https://discord.gg/ZjZadyC7PK)-->
 
-**_Terra_ provides you with various physics simulations, tesselations, filters, presets, and more to generate realistic terrains.** 
+**_Terra_ provides you with various physics simulations, tesselations, filters, presets, and more to generate realistic terrains.** (It's pretty bad right now but getting better!)
 
 </div>
 
@@ -28,7 +28,7 @@ pip install terra
 
 ![](docs/example_1_render.png)
 
-**Example 1. Map of a Continent with Various Biomes.** Tesselate the space using Voronoi cells. Create a heightmap using fractal Brownian noise. Create a temperature map using a slightly warped gradient with added Perlin noise, a precipation map created using Perlin noise. Classify the areas into biomes using a Whittaker diagram. Inspired by [Pvigier's Vagabond Map Generation](https://pvigier.github.io/2019/05/12/vagabond-map-generation.html). Generated height, texture, and material maps with [Terra](), rendered in [Blender](). 
+**Example 1. Map of a Continent with Various Biomes.** Tesselate the space using Voronoi cells. Create a heightmap using fractal Brownian noise. Create a temperature map using a slightly warped gradient with added Perlin noise, a precipation map created using Perlin noise. Classify the areas into biomes using a Whittaker diagram. Inspired by [Pvigier's Vagabond Map Generation](https://pvigier.github.io/2019/05/12/vagabond-map-generation.html). Rendered in [Blender](). 
 
 ```python
 from terra.tess import Voronoi
