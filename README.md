@@ -125,8 +125,6 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Upscale / Super-Resolution (AI)
 + [ ] Smart texturing (AI)
 ### Simulation `sim`
-+ [X] Stone Levels
-+ [X] Brownian Mountains
 + [ ] 👨🏻‍🔧 _**NEXT**_: Hydraulic Terrain Erosion
 + [ ] Object Scattering (e.g. rocks)
 + [ ] River Networks
