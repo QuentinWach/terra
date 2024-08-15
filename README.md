@@ -15,7 +15,7 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 [![GitHub latest commit](https://badgen.net/github/last-commit/QuentinWach/meteor)](https://github.com/QuentinWach/meteor/commits/main)
 <!--[![Discord](https://img.shields.io/discord/1068976834382925865)](https://discord.gg/ZjZadyC7PK)-->
 
-**_Terra_ provides you with various physics simulations, heuristics, filters, presets, and more to generate realistic terrains.** 
+**_Terra_ provides you with various physics simulations, tesselations, filters, presets, and more to generate realistic terrains.** 
 
 </div>
 
@@ -49,7 +49,7 @@ temperaturemap = 30 - 25 * heightmap
 precipationmap = 400 * perlin(X, Y, scale=500, octaves=2, seed=S+3)
 # Create the biome map
 biomemap = classify_biomes(temperaturemap, precipationmap)
-# Plot the biome map
+# Save the biome map
 plt.figure(figsize=(10, 10))
 plt.imshow(biomemap, cmap=biome_cmap)
 plt.axis('off') 
@@ -102,21 +102,28 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Normal Distribution
 + [X] Perlin Noise
 + [X] Fractal Perlin Noise
-+ [X] Domain Warping
++ [X] Warping
 ### Tesselation `tess`
 + [X] Voronoi Tesselation
 + [X] Tesselation Relaxation with Fortune's Algorithm
++ [X] Tesselated Heightmap with Constant Elevation per Cell
++ [ ] Tesselated Heightmap with Linear Gradient per Cell
++ [ ] Fractal Tesselated Heightmap
 + [ ] Meshing to create 3D objects
 ### Rendering `render`
 + [X] Linear Gradient
-+ [X] Whittaker Biom Classification
++ [X] Whittaker Biome Classification
 + [X] Colormaps
 + [X] 2D Map Export (i.e. to generate a 3D file and render it in Blender)
 + [ ] Radial Gradient
 + [ ] Masks
++ [ ] Gradient of Map
++ [ ] Divergence of Map
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
 + [ ] 2D Cartography Map Generator
 + [ ] Import (i.e. to import images to be used as height maps, filters, assets etc.)
++ [ ] Upscale / Super-Resolution (AI)
++ [ ] Smart texturing (AI)
 ### Simulation `sim`
 + [X] Stone Levels
 + [X] Brownian Mountains
