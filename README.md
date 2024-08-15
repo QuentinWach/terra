@@ -115,6 +115,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Whittaker Biome Classification
 + [X] Colormaps
 + [X] 2D Map Export (i.e. to generate a 3D file and render it in Blender)
++ [ ] Terrace Filter (Creating Steps Given a Heightmap)
 + [ ] Radial Gradient
 + [ ] Masks
 + [ ] Gradient of Map
@@ -140,6 +141,12 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Rivers
 + [ ] Lakes
 -->
+---
+## Get Started
+Clone the repository or download it as a zip. Create or open a local Python environment (I recommend Anaconda) and install the dependencies `dependencies.txt`. Go to the root directory and run `python -m examples.example_1` to test out the example given above or just explore the functions provided in the subdirectories to create various textures.
+
+>[!Note]
+> For now, _Terra_ only provides basic 2D rendering of the created maps and various effects and relies on Matplotlib for 3D rendering which is extremely slow. Export the maps you generate to Blender or any other 3D program of your choice then use displacement and colour nodes etc. to create the landscapes.
 
 ---
 ## 🤝🏻 Contribute
