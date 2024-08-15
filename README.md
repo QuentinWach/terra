@@ -96,7 +96,7 @@ tesselate
 ## Features
 The [example shown above](#example) involved various steps. With very few functions, _Terra_ still offers a lot of flexibility in creating terrains. A typical workflow may look like this:
 
-![](docs/workflow.png)
+![alt text](docs/workflow.png)
 
 ### Randomness `random`
 + [X] Normal Distribution
