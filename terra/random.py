@@ -66,33 +66,67 @@ def perlin(X, Y, scale=10, octaves=1, persistence=0.5, lacunarity=2.0, seed=None
     
     return noise
 
-
-def warp(heightmap, shape, warp_strength=2.0, seed=0):
-    """Warp the input heightmap to create a more organic look."""
+"""
+def warp(heightmap, shape, warp_strength=100.0, seed=0):
+    #Warp the input heightmap to create a more organic look.
     height, width = shape[0], shape[1]
     y, x = np.meshgrid(np.arange(height), np.arange(width), indexing='ij')
     
-    # Normalize coordinates to [0, 1] range
-    x = x / width
-    y = y / height
+    # Generate warping noise
+    qx = perlin(width, height, scale=int(shape[1]//5), octaves=3, seed=seed)
+    qy = perlin(width, height, scale=int(shape[0]//5), octaves=3, seed=seed+1)
     
-    # First warping
-    qx = perlin(width, height, scale=100, seed=seed)
-    qy = perlin(width, height, scale=100, seed=seed+1)
+    rx = perlin(width, height, scale=int(shape[1]//10), octaves=3, seed=seed+2)
+    ry = perlin(width, height, scale=int(shape[0]//10), octaves=3, seed=seed+3)
     
-    # Second warping
-    rx = perlin(width, height, scale=50, seed=seed+2) * 4.0 * qx + 1.7
-    ry = perlin(width, height, scale=50, seed=seed+3) * 4.0 * qy + 9.2
-    
-    # Final warping
-    warped_x = x + warp_strength * rx
-    warped_y = y + warp_strength * ry
+    # Apply warping
+    x_warped = x + warp_strength * (qx + rx)
+    y_warped = y + warp_strength * (qy + ry)
     
     # Clip coordinates to ensure they're within the valid range
-    warped_x = np.clip(warped_x * (width - 1), 0, width - 1)
-    warped_y = np.clip(warped_y * (height - 1), 0, height - 1)
-
-    # Use cubic interpolation with "reflect" mode to sample the warped heightmap
-    warped_heightmap = map_coordinates(heightmap, [warped_y, warped_x], order=3, mode="reflect")
+    x_warped = np.clip(x_warped, 0, width - 1)
+    y_warped = np.clip(y_warped, 0, height - 1)
     
+    # Use cubic interpolation with "reflect" mode to sample the warped heightmap
+    warped_heightmap = map_coordinates(heightmap, [y_warped, x_warped], order=3, mode="reflect")
+    
+    return warped_heightmap
+"""
+
+def warp(heightmap, shape, warp_strength=2.0, seed=0):
+    """
+    Warp the input heightmap to create a more organic look.
+    Works with heightmaps containing arbitrary values.
+    """
+    height, width = shape[0], shape[1]
+    y, x = np.meshgrid(np.arange(height), np.arange(width), indexing='ij')
+    # Store original min and max for denormalization later
+    original_min = np.min(heightmap)
+    original_max = np.max(heightmap)
+    # Handle NaN values before normalization
+    mask = np.isnan(heightmap)
+    heightmap_filled = np.where(mask, np.nanmean(heightmap), heightmap)
+    # Normalize heightmap to [0, 1] range
+    original_min = np.nanmin(heightmap_filled)
+    original_max = np.nanmax(heightmap_filled)
+    heightmap_normalized = (heightmap_filled - original_min) / (original_max - original_min)
+    # Generate warping noise
+    # First warp
+    qx = perlin(width, height, scale=20, octaves=4, seed=seed)
+    qy = perlin(width, height, scale=20, octaves=4, seed=seed+1)
+    # Second warp
+    rx = perlin(width, height, scale=10, octaves=4, seed=seed+2)
+    ry = perlin(width, height, scale=10, octaves=4, seed=seed+3)
+    # Apply warping
+    x_warped = x + warp_strength * (qx + rx)
+    y_warped = y + warp_strength * (qy + ry)
+    # Clip coordinates to ensure they're within the valid range
+    x_warped = np.clip(x_warped, 0, width - 1)
+    y_warped = np.clip(y_warped, 0, height - 1)
+    # Use cubic interpolation with "reflect" mode to sample the warped heightmap
+    warped_heightmap = map_coordinates(heightmap_normalized, [y_warped, x_warped], order=3, mode="reflect")
+    # Denormalize the warped heightmap back to the original value range
+    warped_heightmap = warped_heightmap * (original_max - original_min) + original_min
+    # Reapply the mask after warping
+    warped_heightmap = np.where(mask, np.nan, warped_heightmap)    
     return warped_heightmap

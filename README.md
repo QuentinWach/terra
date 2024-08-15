@@ -1,6 +1,6 @@
 <div align="center">
 
-**Your terrain generation toolkit.**
+**The tiny terrain gen toolkit.**
 <picture>
   <img class=head src="docs/terra_header.png">
 </picture>
@@ -16,28 +16,45 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 <!--[![Discord](https://img.shields.io/discord/1068976834382925865)](https://discord.gg/ZjZadyC7PK)-->
 </div>
 
-**_Terra_ provides you with various physics simulations, heuristics, filters, presets, and more to generate realistic terrains.**
+**_Terra_ provides you with various physics simulations, heuristics, filters, presets, and more to generate realistic terrains.** 
+<!--
 Get started with:
 ```
 pip install terra
-```
+```-->
 ## Example
 
+![](docs/example_1_render.png)
 
-**Figure 1. Map of a Continent with Various Biomes.** Tesselate the space using Voronoi cells. Create a heightmap using fractal Brownian noise. Create a temperature map using a slightly warped gradient with added Perlin noise, a precipation map created using Perlin noise. Classify the areas into biomes using a Whittaker diagram. Inspired by [Pvigier's Vagabond Map Generation](https://pvigier.github.io/2019/05/12/vagabond-map-generation.html). Generated height, texture, and material maps with [Terra](), rendered in [Blender]().
+**Example 1. Map of a Continent with Various Biomes.** Tesselate the space using Voronoi cells. Create a heightmap using fractal Brownian noise. Create a temperature map using a slightly warped gradient with added Perlin noise, a precipation map created using Perlin noise. Classify the areas into biomes using a Whittaker diagram. Inspired by [Pvigier's Vagabond Map Generation](https://pvigier.github.io/2019/05/12/vagabond-map-generation.html). Generated height, texture, and material maps with [Terra](), rendered in [Blender](). 
 
 ```python
-from terra import *
-S = 42; np.random.seed(42)
-X = 5000; Y = 5000
-tesselation = relax(tesselate(space=(X, Y), density=0.001), iterate=3)
-heightmap = fbn(X, Y, seed=S+1)
-temperaturemap = lingrad(X, Y, start=(X/2,0,40), end=(X/2,Y, -40))
-precipationmap = fbn(X, Y, seed=S+2)
-height = errode(heightmap, temperaturemap, precipationmap, drops=X*Y//10, dropsize=X*Y//10)
-texture = 
-material =
-export_to_png("example_1", height, texture, material)
+from terra.tess import Voronoi
+from terra.random import perlin, warp
+from terra.render import gaussian_blur, lingrad, export, tess_heightmap, classify_biomes, biome_cmap
+import matplotlib.pyplot as plt
+# Set random seed S and the height X and width Y of the map
+S = 42; X = 500; Y = 500
+# Create the heightman
+tesselation = Voronoi(X, Y, density=0.001, relax=3, seed=S)
+heightmap = perlin(X, Y, scale=150, octaves=1, seed=S)
+heightmap = tess_heightmap(tesselation, shape=(X, Y), heightmap=heightmap)
+heightmap = warp(heightmap, shape=(X, Y), warp_strength=20.0, seed=S+3)
+heightmap = gaussian_blur(heightmap, sigma=2) + 0.5*perlin(X, Y, scale=50, octaves=4, seed=S+10)
+# Create a linear temperature map and a precipitation map using Perlin noise
+linear_tempmap = lingrad(X, Y, start=(X/2,0,30), end=(X/2,Y, -10))
+temperaturemap = 30 - 25 * heightmap
+precipationmap = 400 * perlin(X, Y, scale=500, octaves=2, seed=S+3)
+# Create the biome map
+biomemap = classify_biomes(temperaturemap, precipationmap)
+# Plot the biome map
+plt.figure(figsize=(10, 10))
+plt.imshow(biomemap, cmap=biome_cmap)
+plt.axis('off') 
+plt.savefig('biomemap.png', bbox_inches='tight', pad_inches=0, dpi=300)
+plt.close()
+# Export the heightmap as a png file
+export(heightmap, 'heightmap.png', cmap='Greys_r', dpi=300)
 ```
 
 <!--
@@ -83,7 +100,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Normal Distribution
 + [X] Perlin Noise
 + [X] Fractal Perlin Noise
-+ [ ] 👨🏻‍🔧 TODO: Domain Warping
++ [X] Domain Warping
 ### Tesselation `tess`
 + [X] Voronoi Tesselation
 + [X] Tesselation Relaxation with Fortune's Algorithm
@@ -92,7 +109,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Linear Gradient
 + [X] Whittaker Biom Classification
 + [X] Colormaps
-+ [ ] 👨🏻‍🔧 2D Map Export (i.e. to generate a 3D file and render it in Blender)
++ [X] 2D Map Export (i.e. to generate a 3D file and render it in Blender)
 + [ ] Radial Gradient
 + [ ] Masks
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
@@ -101,7 +118,7 @@ The [example shown above](#example) involved various steps. With very few functi
 ### Simulation `sim`
 + [X] Stone Levels
 + [X] Brownian Mountains
-+ [ ] 👨🏻‍🔧 TODO: Hydraulic Terrain Erosion
++ [ ] 👨🏻‍🔧 _**NEXT**_: Hydraulic Terrain Erosion
 + [ ] Object Scattering (e.g. rocks)
 + [ ] River Networks
 + [ ] River Dynamics Simulation & Erosion

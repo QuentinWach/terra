@@ -1,5 +1,7 @@
 from scipy.ndimage import gaussian_filter
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy.spatial import cKDTree
 
 def gaussian_blur(height_map, sigma=30):
     """
@@ -40,3 +42,125 @@ def lingrad(x, y, start, end):
     # Clamp the height map to the range [start[2], end[2]]
     height_map = np.clip(height_map, min(start[2], end[2]), max(start[2], end[2]))
     return height_map
+
+def tess_heightmap(tesselation, shape, heightmap):
+    """
+    Takes in a Voronoi tesselation and a heightmap and returns a heightmap
+    where each cell is assigned the average height of the corresponding
+    region in the tesselation.
+
+    Args:
+    tesselation: Voronoi - a Voronoi tesselation object
+    heightmap: numpy array - a 2D array of heights
+    """
+    X, Y = shape[0], shape[1]
+    # Create a KD-tree for efficient nearest neighbor search
+    tree = cKDTree(tesselation.points)
+    # Create a grid of all points in the heightmap
+    y, x = np.mgrid[0:X, 0:Y]
+    grid_points = np.column_stack((x.ravel(), y.ravel()))
+    # Find the nearest Voronoi point for each grid point
+    _, cell_indices = tree.query(grid_points)
+    # Reshape cell_indices to match the heightmap shape
+    cell_map = cell_indices.reshape(Y, X)
+    # Calculate average height for each cell
+    unique_cells = np.unique(cell_indices)
+    max_cell_index = np.max(cell_indices)
+    plate_heights = np.zeros(max_cell_index + 1)
+    for cell in unique_cells:
+        mask = cell_map == cell
+        plate_heights[cell] = np.mean(heightmap[mask])
+    # Create the plate heightmap
+    plate_heightmap = plate_heights[cell_map]
+    return plate_heightmap
+
+# Define biome classification based on Whittaker diagram
+def classify_biome_cell(temperature, precipitation):
+    """
+    Create bioms based on the height, temperature and precipitation maps using a simple rule-based system
+    Whittaker diagram: https://en.wikipedia.org/wiki/Whittaker_diagram
+    """
+    # Tundra
+    if temperature <= 0:
+        return 1
+    # Temperate grassland
+    elif temperature > 0 and temperature <= 20 and precipitation < 50:
+        return 2
+    # Subtropical desert
+    elif temperature > 20 and precipitation < 50:
+        return 3
+    elif temperature > 25 and precipitation < 100:
+        return 3
+    # Boreal forest
+    elif temperature > 0 and temperature <= 5 and precipitation >= 50 and precipitation < 150:
+        return 4
+    elif temperature > 5 and temperature <= 10 and precipitation >= 100 and precipitation < 200:
+        return 4
+    # Woodland / scrupland
+    elif temperature > 5 and temperature <= 20 and precipitation >= 50 and precipitation < 100:
+        return 5
+    # Temperate seasonal forest
+    elif temperature > 10 and temperature <= 20 and precipitation >= 100 and precipitation < 200:
+        return 6
+    # Tropical seasonal forest
+    elif temperature > 20 and precipitation >= 100 and precipitation < 250:
+        return 7
+    elif temperature > 20 and temperature <= 25 and precipitation >= 50 and precipitation < 100:
+        return 7
+    elif temperature > 25 and precipitation >= 250 and precipitation < 300:
+        return 7
+    # Tropical rainforest
+    elif temperature > 20 and temperature <= 25 and precipitation >= 250:
+        return 8
+    elif temperature > 25 and precipitation >= 300:
+        return 8
+    # Temperate rainforest
+    elif temperature > 10 and temperature <= 20 and precipitation >= 200:
+        return 9
+    
+# Classify biomes based on temperature, and precipitation.
+def classify_biomes(temperaturemap, shape, precipitationmap):
+    X, Y = shape[0], shape[1]
+    # Check if the dimensions of the maps are the same.
+    assert temperaturemap.shape == precipitationmap.shape
+    Y, X = temperaturemap.shape
+    # Create an empty biome map.
+    biome_map = np.zeros((Y, X))
+    # Classify biomes for each cell in the maps.
+    for y in range(Y):
+        for x in range(X):
+            temperature = temperaturemap[y, x]
+            precipitation = precipitationmap[y, x]
+            biome = classify_biome_cell(temperature, precipitation)
+            biome_map[y, x] = biome
+    return biome_map
+
+# Define the colormap for the biomes
+from matplotlib.colors import ListedColormap
+# Define the RGB values for each biome and normalize them to [0, 1]
+biome_colors = {
+    1: (148/255, 168/255, 174/255),  # Tundra
+    2: (147/255, 127/255, 44/255),   # Temperate grassland/cold desert
+    3: (201/255, 114/255, 52/255),   # Subtropical desert
+    4: (91/255, 144/255, 81/255),    # Boreal forest
+    5: (180/255, 125/255, 1/255),    # Woodland/shrubland
+    6: (40/255, 138/255, 161/255),   # Temperate seasonal forest
+    7: (152/255, 166/255, 34/255),   # Tropical seasonal forest
+    8: (1/255, 82/255, 44/255),      # Tropical rainforest
+    9: (3/255, 83/255, 109/255)      # Temperate rainforest
+}
+
+# Create a list of colors sorted by biome ID
+sorted_biome_colors = [biome_colors[i] for i in sorted(biome_colors.keys())]
+# Create the colormap
+biome_cmap = ListedColormap(sorted_biome_colors)
+
+def export(map, filename, cmap, dpi=300):
+    """
+    Export a heightmap to a PNG file.
+    
+    Args:
+    map (np.ndarray): A 2D array of shape (y, x) representing the height map.
+    filename (str): The name of the file to save the height map to.
+    """
+    plt.imsave(filename, map, cmap=cmap, dpi=dpi)

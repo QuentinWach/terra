@@ -16,15 +16,12 @@ biome_colors = {
 sorted_biome_colors = [biome_colors[i] for i in sorted(biome_colors.keys())]
 # Create the colormap
 biome_cmap = ListedColormap(sorted_biome_colors)
-
 # Example usage: Visualize the colormap
 plt.figure(figsize=(8, 2))
 plt.imshow([list(range(len(sorted_biome_colors)))], cmap=biome_cmap, aspect='auto')
-
 # Label the axis with the names of the biomes
 plt.yticks([])
 plt.xticks(range(len(sorted_biome_colors)), sorted(biome_colors.keys()), rotation=0)
-
 plt.title('Biome Types')
 plt.tight_layout()
 plt.show()

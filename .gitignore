@@ -1,3 +1,5 @@
 *.psd
 *.pdf
 *_pycache_
+*.blend
+legacy
