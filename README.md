@@ -128,6 +128,9 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Smart texturing (AI)
 ### Simulation `sim`
 + [ ] 👨🏻‍🔧 _**NEXT**_: [Hydraulic Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
++ [ ] Single One-Step-Erosion (OSE)
++ [ ] Spread OSE
++ [ ] Sparse Spread OSE
 + [ ] [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
 + [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines
 + [ ] Object Scattering (e.g. rocks)
