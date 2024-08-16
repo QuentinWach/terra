@@ -103,6 +103,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Perlin Noise
 + [X] Fractal Perlin Noise
 + [X] Warping
++ [ ] 👨🏻‍🔧 _**NEXT**_:[Fractal Trick](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Modifying the Fractal Perlin Algorithm To Add Mountainous Character to Terrains
 ### Tesselation `tess`
 + [X] Voronoi Tesselation
 + [X] Tesselation Relaxation with Fortune's Algorithm
@@ -126,20 +127,36 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Upscale / Super-Resolution (AI)
 + [ ] Smart texturing (AI)
 ### Simulation `sim`
-+ [ ] 👨🏻‍🔧 _**NEXT**_: Hydraulic Terrain Erosion
++ [ ] 👨🏻‍🔧 _**NEXT**_: [Hydraulic Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
++ [ ] [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
++ [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines
 + [ ] Object Scattering (e.g. rocks)
 + [ ] River Networks
 + [ ] River Dynamics Simulation & Erosion
 + [ ] Snow Deposition
 
 <!--
-### 2D/3D Assets `assets`
-+ [ ] Crators
+### Live View
++ [ ] Node editor like: 
+  + https://github.com/IndiePython/nodezator ???
+  + https://www.youtube.com/watch?v=xbTLhMJARrk&list=PLZSNHzwDCOggHLThIbCxUhWTgrKVemZkz ??
+  + https://github.com/bhowiebkr/python-node-editor ??
+  + https://www.youtube.com/watch?v=i_pB-Y0hCYQ
++ [ ] 2D Map Live view
++ [ ] 3D Render Window that updates live as the maps are updated
+
+### Geo Primitives
 + [ ] Mountains
++ [ ] Crators
 + [ ] Rocks
 + [ ] Canions
 + [ ] Rivers
 + [ ] Lakes
++ [ ] Island
++ [ ] Sand
++ [ ] Slump
++ [ ] Dunes
++ [ ] Plates
 -->
 ---
 ## Get Started
