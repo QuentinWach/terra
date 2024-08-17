@@ -26,9 +26,21 @@ pip install terra
 ```-->
 ## Example
 
+![](docs/height_colour_normal_example.png)
+**Example 1. A Tiny Island.** Using fractal Perlin noise with the pointify effect at every level, a simple island can be generated effortlessly. The image here shows the heightmap, the colourmap, and normal map generated with _Terra_. 
+```python
+terrain = hill(500, 500) # create the island heightmap
+normal_map = calculate_normal_map(terrain) # calculate the normals
+export(terrain, "hill.png", cmap="Greys_r")
+export(terrain, "hill_coloured.png", cmap=terrain_cmap())
+export(normal_map, "hill_normal.png", cmap="viridis")
+
+```
+
+---
 ![](docs/example_1_render.png)
 
-**Example 1. Map of a Continent with Various Biomes.** Tesselate the space using Voronoi cells. Create a heightmap using fractal Brownian noise. Create a temperature map using a slightly warped gradient with added Perlin noise, a precipation map created using Perlin noise. Classify the areas into biomes using a Whittaker diagram. Inspired by [Pvigier's Vagabond Map Generation](https://pvigier.github.io/2019/05/12/vagabond-map-generation.html). Rendered in [Blender](). 
+**Example 2. Map of a Continent with Various Biomes.** Tesselate the space using Voronoi cells. Create a heightmap using fractal Brownian noise. Create a temperature map using a slightly warped gradient with added Perlin noise, a precipation map created using Perlin noise. Classify the areas into biomes using a Whittaker diagram. Inspired by [Pvigier's Vagabond Map Generation](https://pvigier.github.io/2019/05/12/vagabond-map-generation.html). Rendered in [Blender](). 
 
 ```python
 from terra.tess import Voronoi
@@ -115,10 +127,10 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Meshing to create 3D objects
 ### Rendering `render`
 + [X] Linear Gradient
-+ [X] Whittaker Biome Classification
-+ [X] Colormaps
++ [X] Whittaker Biome Classification and Colormap
 + [X] 2D Map Export (i.e. to generate a 3D file and render it in Blender)
 + [X] Radial Gradient
++ [X] Standard Terrain Heightmap
 + [ ] Normal Map Calculation
 + [ ] Terrace Filter (Creating Steps Given a Heightmap)
 + [ ] Masks
@@ -171,16 +183,16 @@ The [example shown above](#example) involved various steps. With very few functi
 Clone the repository or download it as a zip. Create or open a local Python environment (I recommend Anaconda) and install the dependencies `dependencies.txt`. Go to the root directory and run `python -m examples.example_1` to test out the example given above or just explore the functions provided in the subdirectories to create various textures.
 
 >[!Note]
-> For now, _Terra_ only provides basic 2D rendering of the created maps and various effects and relies on Matplotlib for 3D rendering which is extremely slow. Export the maps you generate to Blender or any other 3D program of your choice then use displacement and colour nodes etc. to create the landscapes.
+> For now, _Terra_ only provides basic 2D rendering of the created maps and various effects and relies on Matplotlib for 3D rendering which is extremely slow. Export the maps you generate to Blender or any other 3D program of your choice then use displacement and color nodes etc. to create the landscapes.
 
 ---
 ## 🤝🏻 Contribute
-The plan is to:
+**There is much to do.** The plan:
 1. Implement various terrain generation algorithms and tools quickly in Python.
 2. Once we have a capable collection, optimize the performance for real-time and large scales.
 3. Create a GUI interface.
 
-**There is much to do!** At this point, Terra is pretty much just educational. But it doesn't have to be. Leave your mark and add to this Python library! You know how it goes. You found a bug? Add an issue. Any ideas for improvement or feeling the need to add more features? Clone the repository, make the changes, and submit a pull request, or...
+ At this point, Terra is pretty much just educational. But it doesn't have to be. Leave your mark and add to this Python library. You know how it goes. You found a bug? Add an issue. Any ideas for improvement or feeling the need to add more features? Clone the repository, make the changes, and submit a pull request, or...
 
 > **Leave a ⭐ to show your support!**
 

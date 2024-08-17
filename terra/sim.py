@@ -1,6 +1,6 @@
 import numpy as np
 from rand import perlin
-from render import export
+from render import export, calculate_normal_map, terrain_cmap
 from tqdm import tqdm
 
 def wet(heightmap, strength=50, spread=True):
@@ -96,6 +96,8 @@ def hill(X, Y, seed=42):
 
 
 
-# Example usage to match your original script:
-terrain = hill(200, 200)
+terrain = hill(500, 500) # create the island heightmap
+normal_map = calculate_normal_map(terrain) # calculate the normals
 export(terrain, "hill.png", cmap="Greys_r")
+export(terrain, "hill_coloured.png", cmap=terrain_cmap())
+export(normal_map, "hill_normal.png", cmap="viridis")

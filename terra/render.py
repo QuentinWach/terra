@@ -2,6 +2,7 @@ from scipy.ndimage import gaussian_filter
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
+from matplotlib.colors import LinearSegmentedColormap
 from scipy.spatial import cKDTree
 
 def gaussian_blur(height_map, sigma=30):
@@ -203,3 +204,42 @@ biome_colors = {
 }
 sorted_biome_colors = [biome_colors[i] for i in sorted(biome_colors.keys())]
 biome_cmap = ListedColormap(sorted_biome_colors)
+
+def terrain_cmap():
+    colors = [
+        (0, 0.2, 0.5),     # Deep water
+        (0, 0.5, 1),       # Shallow water
+        (0.9, 0.8, 0.6),   # Sand
+        (0.5, 0.7, 0.3),   # Grass
+        (0.2, 0.5, 0.2),   # Forest
+        (0.6, 0.6, 0.6),   # Mountains
+        (1, 1, 1)          # Snow
+    ]
+    
+    # Create a continuous colormap
+    cmap = LinearSegmentedColormap.from_list("terrain", colors, N=256)
+    
+    return cmap
+
+
+def calculate_normal_map(heightmap):
+    # Compute gradients
+    dx, dy = np.gradient(heightmap)
+
+    # Assuming the z (height) scale is the same as x and y
+    dz = np.ones_like(dx)  # Create an array with the same shape as dx/dy
+    
+    # Calculate the normal vectors
+    normal_map = np.dstack((-dx, -dy, dz))
+
+    # Normalize the normal vectors
+    norm = np.linalg.norm(normal_map, axis=2)
+    normal_map[:, :, 0] /= norm
+    normal_map[:, :, 1] /= norm
+    normal_map[:, :, 2] /= norm
+
+    # Convert normal map to range [0, 255] for RGB image output
+    normal_map = (normal_map + 1) / 2.0 * 255.0
+    normal_map = normal_map.astype(np.uint8)
+    
+    return normal_map
