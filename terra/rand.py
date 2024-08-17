@@ -66,32 +66,8 @@ def perlin(X, Y, scale=10, octaves=1, persistence=0.5, lacunarity=2.0, seed=None
     
     return noise
 
-"""
-def warp(heightmap, shape, warp_strength=100.0, seed=0):
-    #Warp the input heightmap to create a more organic look.
-    height, width = shape[0], shape[1]
-    y, x = np.meshgrid(np.arange(height), np.arange(width), indexing='ij')
-    
-    # Generate warping noise
-    qx = perlin(width, height, scale=int(shape[1]//5), octaves=3, seed=seed)
-    qy = perlin(width, height, scale=int(shape[0]//5), octaves=3, seed=seed+1)
-    
-    rx = perlin(width, height, scale=int(shape[1]//10), octaves=3, seed=seed+2)
-    ry = perlin(width, height, scale=int(shape[0]//10), octaves=3, seed=seed+3)
-    
-    # Apply warping
-    x_warped = x + warp_strength * (qx + rx)
-    y_warped = y + warp_strength * (qy + ry)
-    
-    # Clip coordinates to ensure they're within the valid range
-    x_warped = np.clip(x_warped, 0, width - 1)
-    y_warped = np.clip(y_warped, 0, height - 1)
-    
-    # Use cubic interpolation with "reflect" mode to sample the warped heightmap
-    warped_heightmap = map_coordinates(heightmap, [y_warped, x_warped], order=3, mode="reflect")
-    
-    return warped_heightmap
-"""
+def billow(X, Y, scale=10, octaves=1, persistence=0.5, lacunarity=2.0, seed=None):
+    return np.absolute(perlin(X=X, Y=Y, scale=scale, octaves=octaves, persistence=persistence, lacunarity=lacunarity, seed=seed))
 
 def warp(heightmap, shape, warp_strength=2.0, seed=0):
     """

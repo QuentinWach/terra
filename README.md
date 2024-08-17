@@ -101,9 +101,10 @@ The [example shown above](#example) involved various steps. With very few functi
 ### Randomness `random`
 + [X] Normal Distribution
 + [X] Perlin Noise
++ [X] Billow Noise
 + [X] Fractal Perlin Noise
 + [X] Warping
-+ [ ] 👨🏻‍🔧 _**NEXT**_:[Fractal Trick](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Modifying the Fractal Perlin Algorithm To Add Mountainous Character to Terrains
++ [ ] 👨🏻‍🔧 _**NEXT**_:[Gradient Trick](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Modifying the Fractal Perlin Algorithm To Add Mountainous Character to Terrains
 ### Tesselation `tess`
 + [X] Voronoi Tesselation
 + [X] Tesselation Relaxation with Fortune's Algorithm
@@ -116,6 +117,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Whittaker Biome Classification
 + [X] Colormaps
 + [X] 2D Map Export (i.e. to generate a 3D file and render it in Blender)
++ [ ] Normal Map Calculation
 + [ ] Terrace Filter (Creating Steps Given a Heightmap)
 + [ ] Radial Gradient
 + [ ] Masks
@@ -127,6 +129,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Upscale / Super-Resolution (AI)
 + [ ] Smart texturing (AI)
 ### Simulation `sim`
++ [X] Wet Erosion: Eroding the local area to create stone-like effect from noise.
 + [ ] 👨🏻‍🔧 _**NEXT**_: [Hydraulic Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
 + [ ] Single One-Step-Erosion (OSE)
 + [ ] Spread OSE

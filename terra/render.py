@@ -1,6 +1,7 @@
 from scipy.ndimage import gaussian_filter
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
 from scipy.spatial import cKDTree
 
 def gaussian_blur(height_map, sigma=30):
@@ -43,6 +44,48 @@ def lingrad(x, y, start, end):
     height_map = np.clip(height_map, min(start[2], end[2]), max(start[2], end[2]))
     return height_map
 
+def gradient(heightmap):
+    """
+    Calculate the gradient magnitude of a 2D heightmap.
+    
+    Args:
+    heightmap (numpy.ndarray): 2D array representing the heightmap
+    
+    Returns:
+    numpy.ndarray: 2D array representing the gradient magnitude
+    """
+    dy, dx = np.gradient(heightmap)
+    return np.sqrt(dy**2 + dx**2)
+
+#def divergence(heightmap):
+    """
+    Calculate the divergence of a 2D heightmap.
+    This interprets the heightmap as a scalar potential field.
+    
+    Args:
+    heightmap (numpy.ndarray): 2D array representing the heightmap
+    
+    Returns:
+    numpy.ndarray: 2D array representing the divergence
+    """
+    dy, dx = np.gradient(heightmap)
+    return np.gradient(dx, axis=1) + np.gradient(dy, axis=0)
+
+#def curl(heightmap):
+    """
+    Calculate the curl magnitude of a 2D heightmap.
+    This interprets the heightmap as a scalar potential field.
+    Note: In 2D, curl is a scalar (the z-component of the 3D curl).
+    
+    Args:
+    heightmap (numpy.ndarray): 2D array representing the heightmap
+    
+    Returns:
+    numpy.ndarray: 2D array representing the curl magnitude
+    """
+    dy, dx = np.gradient(heightmap)
+    return np.abs(np.gradient(dx, axis=0) - np.gradient(dy, axis=1))
+
 def tess_heightmap(tesselation, shape, heightmap):
     """
     Takes in a Voronoi tesselation and a heightmap and returns a heightmap
@@ -74,7 +117,6 @@ def tess_heightmap(tesselation, shape, heightmap):
     plate_heightmap = plate_heights[cell_map]
     return plate_heightmap
 
-# Define biome classification based on Whittaker diagram
 def classify_biome_cell(temperature, precipitation):
     """
     Create bioms based on the height, temperature and precipitation maps using a simple rule-based system
@@ -118,8 +160,10 @@ def classify_biome_cell(temperature, precipitation):
     elif temperature > 10 and temperature <= 20 and precipitation >= 200:
         return 9
     
-# Classify biomes based on temperature, and precipitation.
 def classify_biomes(temperaturemap, shape, precipitationmap):
+    """
+    Classify biomes based on temperature, and precipitation.
+    """
     X, Y = shape[0], shape[1]
     # Check if the dimensions of the maps are the same.
     assert temperaturemap.shape == precipitationmap.shape
@@ -135,9 +179,17 @@ def classify_biomes(temperaturemap, shape, precipitationmap):
             biome_map[y, x] = biome
     return biome_map
 
-# Define the colormap for the biomes
-from matplotlib.colors import ListedColormap
-# Define the RGB values for each biome and normalize them to [0, 1]
+def export(map, filename, cmap, dpi=300):
+    """
+    Export a heightmap to a PNG file.
+    
+    Args:
+    map (np.ndarray): A 2D array of shape (y, x) representing the height map.
+    filename (str): The name of the file to save the height map to.
+    """
+    plt.imsave(filename, map, cmap=cmap, dpi=dpi)
+
+# Create the biomes class colormap
 biome_colors = {
     1: (148/255, 168/255, 174/255),  # Tundra
     2: (147/255, 127/255, 44/255),   # Temperate grassland/cold desert
@@ -149,18 +201,5 @@ biome_colors = {
     8: (1/255, 82/255, 44/255),      # Tropical rainforest
     9: (3/255, 83/255, 109/255)      # Temperate rainforest
 }
-
-# Create a list of colors sorted by biome ID
 sorted_biome_colors = [biome_colors[i] for i in sorted(biome_colors.keys())]
-# Create the colormap
 biome_cmap = ListedColormap(sorted_biome_colors)
-
-def export(map, filename, cmap, dpi=300):
-    """
-    Export a heightmap to a PNG file.
-    
-    Args:
-    map (np.ndarray): A 2D array of shape (y, x) representing the height map.
-    filename (str): The name of the file to save the height map to.
-    """
-    plt.imsave(filename, map, cmap=cmap, dpi=dpi)
