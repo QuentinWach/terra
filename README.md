@@ -104,7 +104,8 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Billow Noise
 + [X] Fractal Perlin Noise
 + [X] Warping
-+ [ ] 👨🏻‍🔧 _**NEXT**_:[Gradient Trick](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Modifying the Fractal Perlin Algorithm To Add Mountainous Character to Terrains
++ [X] [Pointify](https://www.youtube.com/watch?v=gsJHzBTPG0Y)
++ [X] Pointy Perlin
 ### Tesselation `tess`
 + [X] Voronoi Tesselation
 + [X] Tesselation Relaxation with Fortune's Algorithm
@@ -117,9 +118,9 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Whittaker Biome Classification
 + [X] Colormaps
 + [X] 2D Map Export (i.e. to generate a 3D file and render it in Blender)
++ [X] Radial Gradient
 + [ ] Normal Map Calculation
 + [ ] Terrace Filter (Creating Steps Given a Heightmap)
-+ [ ] Radial Gradient
 + [ ] Masks
 + [ ] Gradient of Map
 + [ ] Divergence of Map
@@ -131,16 +132,17 @@ The [example shown above](#example) involved various steps. With very few functi
 ### Simulation `sim`
 + [X] Wet Erosion: Eroding the local area to create stone-like effect from noise.
 + [ ] 👨🏻‍🔧 _**NEXT**_: [Hydraulic Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
-+ [ ] Single One-Step-Erosion (OSE)
-+ [ ] Spread OSE
-+ [ ] Sparse Spread OSE
 + [ ] [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
 + [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines
++ [ ] [Real-Time Erosion with Lake Generation](https://www.youtube.com/watch?v=Ds7R6UzMTXI) ([Paper](https://inria.hal.science/inria-00402079))
++ [ ] [Fast Hydraulic-Thermal Erosion On the GPU](https://old.cescg.org/CESCG-2011/papers/TUBudapest-Jako-Balazs.pdf)
 + [ ] Object Scattering (e.g. rocks)
 + [ ] River Networks
 + [ ] River Dynamics Simulation & Erosion
 + [ ] Snow Deposition
-
++ [ ] [Large Terrains with Tectonic Uplift and Fluvial Erosion](https://inria.hal.science/hal-01262376/document)
+### Geo Primitives
++ [X] Hill
 <!--
 ### Live View
 + [ ] Node editor like: 
@@ -173,6 +175,11 @@ Clone the repository or download it as a zip. Create or open a local Python envi
 
 ---
 ## 🤝🏻 Contribute
+The plan is to:
+1. Implement various terrain generation algorithms and tools quickly in Python.
+2. Once we have a capable collection, optimize the performance for real-time and large scales.
+3. Create a GUI interface.
+
 **There is much to do!** At this point, Terra is pretty much just educational. But it doesn't have to be. Leave your mark and add to this Python library! You know how it goes. You found a bug? Add an issue. Any ideas for improvement or feeling the need to add more features? Clone the repository, make the changes, and submit a pull request, or...
 
 > **Leave a ⭐ to show your support!**

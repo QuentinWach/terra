@@ -1,5 +1,5 @@
 from terra.tess import Voronoi
-from terra.random import perlin, warp
+from terra.rand import perlin, warp
 from terra.render import gaussian_blur, lingrad, export, tess_heightmap, classify_biomes, biome_cmap
 import matplotlib.pyplot as plt
 # Set random seed D and the height Y and width Y of the map

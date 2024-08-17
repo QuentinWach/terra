@@ -14,7 +14,8 @@ def wet(heightmap, strength=50, spread=True):
     spread: bool - whether to erode all surrounding lower pixels at once or only the lowest one
 
     Todo:
-    Add sparse erosion which only erodes certain areas (improving performance and creating more realistic erosion patterns).
+    - Add sparse erosion which only erodes certain areas (improving performance and creating more realistic erosion patterns).
+    - Speed of the technique could be improved by using a GPU as it is highly parallelizable.
     """
     print("Starting erosion simulation...")
     erosion_strength = 1
@@ -52,16 +53,49 @@ def wet(heightmap, strength=50, spread=True):
                         eroded[smallest_neighbour_coords[0]][smallest_neighbour_coords[1]] += abs(erosion_strength*slope)
     return eroded    
 
-# Create a Perlin noise heightmap
-S = 42; X = 500; Y = 500
-print("Creating perlin noise...")
-hm = perlin(X, Y, scale=1000, octaves=1, seed=S)
-perlin = hm*perlin(X, Y, scale=100, octaves=3, seed=S)
-# Save the Perlin noise map
-export(perlin, 'before.png', cmap='Greys_r', dpi=300)
-# Erode the Perlin noise map by wetting it
-eroded = wet(perlin, strength=5)
-# Save the eroded map
-export(eroded, 'after5.png', cmap='Greys_r', dpi=300)
-# Save the difference
-export(eroded - perlin, 'diff5.png', cmap='Greys_r', dpi=300)     
+def pointify(height_map, strength=0.5, get_gradient=False):
+    # Calculate gradients
+    dy, dx = np.gradient(height_map)
+    # Calculate gradient magnitude
+    gradient_magnitude = np.sqrt(dx**2 + dy**2)
+    # Normalize gradient magnitude
+    gradient_magnitude = gradient_magnitude / np.max(gradient_magnitude)
+    # Apply exponential function to gradient magnitude
+    terrain =  height_map * np.exp(-(strength*gradient_magnitude)**2)
+    # Return the terrain and gradient magnitude if requested
+    if get_gradient: return terrain, gradient_magnitude
+    return terrain
+
+def pointy_perlin(X, Y, scale, octaves=4, persistence=0.35, lacunarity=2.5, pointiness=0.5, pointilarity=0.5, seed=42):
+    terrain = np.zeros((Y, X))
+    p = 1
+    scale = scale
+    pointiness = pointiness
+    for i in range(octaves):
+        terrain += p*pointify(perlin(X=X, Y=Y, scale=scale, lacunarity=lacunarity, octaves=1, seed=seed+i), strength=pointiness)
+        p *= persistence
+        scale /= lacunarity
+        pointiness += pointilarity
+    return terrain
+
+def radial_mask(X, Y, max_value=255):
+    # Create coordinate grids
+    x = np.linspace(-1, 1, X)
+    y = np.linspace(-1, 1, Y)
+    x_grid, y_grid = np.meshgrid(x, y)
+    # Calculate the distance from the center for each pixel
+    distance = np.sqrt(x_grid**2 + y_grid**2)
+    # Normalize the distance so that the center is 0 and edges approach 1
+    distance = np.clip(distance, 0, 1)
+    # Invert and scale the distance to get the height values
+    heightmap = (1 - distance)**2 * max_value
+    return heightmap
+
+def hill(X, Y, seed=42):
+    return radial_mask(X,Y)*pointy_perlin(X=X, Y=Y, octaves=4, scale=np.sqrt(X*Y)*0.85, pointiness=0.7, pointilarity=0.2, seed=seed)
+
+
+
+# Example usage to match your original script:
+terrain = hill(200, 200)
+export(terrain, "hill.png", cmap="Greys_r")
