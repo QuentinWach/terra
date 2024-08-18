@@ -7,7 +7,7 @@
 Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 <h3>
 
-[Example](#example) ▪ [Features](#features)
+[Examples](#examples) ▪ [Features](#features)
 </h3>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
