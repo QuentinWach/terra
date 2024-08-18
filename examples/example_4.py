@@ -1,26 +1,11 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
+from terra.sim import hill
+from terra.render import export, normal_map, shadow_map, bake_shadows, terrain_cmap
 
-def terrain_cmap():
-    colors = [
-        (0, 0.2, 0.5),     # Deep water
-        (0, 0.5, 1),       # Shallow water
-        (0.9, 0.8, 0.6),   # Sand
-        (0.5, 0.7, 0.3),   # Grass
-        (0.2, 0.5, 0.2),   # Forest
-        (0.6, 0.6, 0.6),   # Mountains
-        (1, 1, 1)          # Snow
-    ]
-    
-    # Create a continuous colormap
-    cmap = LinearSegmentedColormap.from_list("terrain", colors, N=256)
-    
-    return cmap
-
-# Example usage:
-height_data = np.random.rand(100, 100)  # Replace with your actual heightmap data
-plt.imshow(height_data, cmap=terrain_cmap())
-plt.colorbar()
-plt.title("Continuous Terrain Heightmap")
-plt.show()
+terrain = hill(500, 500) # create the island heightmap
+normal_map = normal_map(terrain) # calculate the normals
+shadow_map = shadow_map(normal_map) # calculate the shadows
+render = bake_shadows(terrain, shadow_map) # bake the shadows into the terrain
+export(terrain, "hill.png", cmap="Greys_r")
+export(terrain, "hill_coloured.png", cmap=terrain_cmap())
+export(normal_map, "hill_normal.png", cmap="viridis")
+export(shadow_map, "hill_shadow.png", cmap="gray")

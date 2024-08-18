@@ -221,25 +221,31 @@ def terrain_cmap():
     
     return cmap
 
-
-def calculate_normal_map(heightmap):
+def normal_map(heightmap):
     # Compute gradients
     dx, dy = np.gradient(heightmap)
-
     # Assuming the z (height) scale is the same as x and y
     dz = np.ones_like(dx)  # Create an array with the same shape as dx/dy
-    
     # Calculate the normal vectors
     normal_map = np.dstack((-dx, -dy, dz))
-
     # Normalize the normal vectors
     norm = np.linalg.norm(normal_map, axis=2)
     normal_map[:, :, 0] /= norm
     normal_map[:, :, 1] /= norm
     normal_map[:, :, 2] /= norm
-
     # Convert normal map to range [0, 255] for RGB image output
     normal_map = (normal_map + 1) / 2.0 * 255.0
     normal_map = normal_map.astype(np.uint8)
-    
     return normal_map
+
+def shadow_map(normal_map, light_dir=[1, 1, 1]):
+    # Normalize the light direction
+    light_dir = np.array(light_dir)
+    light_dir = light_dir / np.linalg.norm(light_dir)
+    # Convert normal map back to [-1, 1] range
+    normal_map = normal_map / 255.0 * 2.0 - 1.0
+    # Compute the dot product between the normal map and light direction
+    dot_product = np.sum(normal_map * light_dir, axis=2)
+    # Clamp the values to [0, 1]
+    shadow_map = np.clip(dot_product, 0, 1)
+    return shadow_map

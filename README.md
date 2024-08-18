@@ -19,37 +19,38 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 
 </div>
 
-<!--
-Get started with:
+## Examples
+![](docs/render_2_1.png)
+**Example 1. Lakes and Mountains.** The heightmap and colormap were generated with _Terra_ using the code below then exported and rendered in Blender. Fractal Perlin noise is used to generate the terrain. In order to make the terrain more mountain-like, a custom pointify filter is applied on every level of the Perlin noise.
+```python
+X = 1000; Y = 1000
+terrain = pointy_perlin(X, Y, scale=200, octaves=5, persistence=0.35, 
+                        lacunarity=2.5, pointiness=0.5, pointilarity=0.5)
+terrain_normal = normal_map(terrain)
+export(terrain, 'terrain.png', cmap="Greys_r", dpi=300)
+export(terrain, 'terrain_color.png', cmap=terrain_cmap(), dpi=300)
 ```
-pip install terra
-```-->
-## Example
+
 
 ![](docs/height_colour_normal_example.png)
-**Example 1. A Tiny Island.** Using fractal Perlin noise with the pointify effect at every level, a simple island can be generated effortlessly. The image here shows the heightmap, the colourmap, and normal map generated with _Terra_. 
+**Example 2. A Tiny Island.** Using fractal Perlin noise with the pointify effect at every level, a simple island can be generated effortlessly. The image here shows the heightmap, the colourmap, and normal map generated with _Terra_. 
 ```python
 terrain = hill(500, 500) # create the island heightmap
-normal_map = calculate_normal_map(terrain) # calculate the normals
+normal_map = normal_map(terrain) # calculate the normals
 export(terrain, "hill.png", cmap="Greys_r")
 export(terrain, "hill_coloured.png", cmap=terrain_cmap())
 export(normal_map, "hill_normal.png", cmap="viridis")
-
 ```
 
 ---
+<!--
 ![](docs/example_1_render.png)
 
 **Example 2. Map of a Continent with Various Biomes.** Tesselate the space using Voronoi cells. Create a heightmap using fractal Brownian noise. Create a temperature map using a slightly warped gradient with added Perlin noise, a precipation map created using Perlin noise. Classify the areas into biomes using a Whittaker diagram. Inspired by [Pvigier's Vagabond Map Generation](https://pvigier.github.io/2019/05/12/vagabond-map-generation.html). Rendered in [Blender](). 
 
 ```python
-from terra.tess import Voronoi
-from terra.random import perlin, warp
-from terra.render import gaussian_blur, lingrad, export, tess_heightmap, classify_biomes, biome_cmap
-import matplotlib.pyplot as plt
-# Set random seed S and the height X and width Y of the map
 S = 42; X = 500; Y = 500
-# Create the heightman
+# Create the heightmap
 tesselation = Voronoi(X, Y, density=0.001, relax=3, seed=S)
 heightmap = perlin(X, Y, scale=150, octaves=1, seed=S)
 heightmap = tess_heightmap(tesselation, shape=(X, Y), heightmap=heightmap)
@@ -59,9 +60,8 @@ heightmap = gaussian_blur(heightmap, sigma=2) + 0.5*perlin(X, Y, scale=50, octav
 linear_tempmap = lingrad(X, Y, start=(X/2,0,30), end=(X/2,Y, -10))
 temperaturemap = 30 - 25 * heightmap
 precipationmap = 400 * perlin(X, Y, scale=500, octaves=2, seed=S+3)
-# Create the biome map
+# Create and save the biome map as a png file
 biomemap = classify_biomes(temperaturemap, precipationmap)
-# Save the biome map
 plt.figure(figsize=(10, 10))
 plt.imshow(biomemap, cmap=biome_cmap)
 plt.axis('off') 
@@ -70,7 +70,7 @@ plt.close()
 # Export the heightmap as a png file
 export(heightmap, 'heightmap.png', cmap='Greys_r', dpi=300)
 ```
-
+-->
 <!--
 ---
 ### 2. The Great Mountain

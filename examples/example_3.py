@@ -1,4 +1,4 @@
-from terra.rand import perlin, warp
+from terra.randd import perlin, warp
 from terra.render import export
 from terra.sim import wet
 
