@@ -73,6 +73,12 @@ def warp(heightmap, shape, warp_strength=2.0, seed=0):
     """
     Warp the input heightmap to create a more organic look.
     Works with heightmaps containing arbitrary values.
+
+    Args:
+    heightmap (numpy.ndarray): 2D array representing the heightmap
+    shape (tuple): Shape of the heightmap
+    warp_strength (float): Strength of the warping effect
+    seed (int): Random seed for reproducibility
     """
     height, width = shape[0], shape[1]
     y, x = np.meshgrid(np.arange(height), np.arange(width), indexing='ij')

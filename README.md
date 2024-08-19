@@ -23,8 +23,7 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 ![](docs/render_2_1.png)
 **Example 1. Lakes and Mountains.** The heightmap and colormap were generated with _Terra_ using the code below then exported and rendered in Blender. Fractal Perlin noise is used to generate the terrain. In order to make the terrain more mountain-like, a custom pointify filter is applied on every level of the Perlin noise.
 ```python
-X = 1000; Y = 1000
-terrain = pointy_perlin(X, Y, scale=200, octaves=5, persistence=0.35, 
+terrain = pointy_perlin(X=1000, Y=1000, scale=200, octaves=5, persistence=0.35, 
                         lacunarity=2.5, pointiness=0.5, pointilarity=0.5)
 terrain_normal = normal_map(terrain)
 export(terrain, 'terrain.png', cmap="Greys_r", dpi=300)
@@ -121,27 +120,30 @@ The [example shown above](#example) involved various steps. With very few functi
 ### Tesselation `tess`
 + [X] Voronoi Tesselation
 + [X] Tesselation Relaxation with Fortune's Algorithm
-+ [X] Tesselated Heightmap with Constant Elevation per Cell
-+ [ ] Tesselated Heightmap with Linear Gradient per Cell
-+ [ ] Fractal Tesselated Heightmap
++ [X] Tesselated Height Map with Constant Elevation per Cell
++ [ ] Tesselated Height Map with Linear Gradient per Cell
++ [ ] Einstein Tiling for Infinite Non-Repeating Terrains
 + [ ] Meshing to create 3D objects
 ### Rendering `render`
 + [X] Linear Gradient
 + [X] Whittaker Biome Classification and Colormap
 + [X] 2D Map Export (i.e. to generate a 3D file and render it in Blender)
-+ [X] Radial Gradient
-+ [X] Standard Terrain Heightmap
-+ [ ] Normal Map Calculation
-+ [ ] Terrace Filter (Creating Steps Given a Heightmap)
-+ [ ] Masks
-+ [ ] Gradient of Map
-+ [ ] Divergence of Map
++ [X] Radial Gradient / Mask
++ [X] Standard Terrain Height Map
++ [X] Normal Map Calculation
++ [X] Gradient of Map
++ [X] Divergence of Map
++ [ ] Import (i.e. to import images to be used as height maps, filters, assets etc.)
++ [ ] Kernel Filters (Blur, Gaussian Blur, Sharpen, Custom, ...)
++ [ ] Terrace Filter (Creating Steps Given a Height Map)
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
 + [ ] 2D Cartography Map Generator
-+ [ ] Import (i.e. to import images to be used as height maps, filters, assets etc.)
++ [ ] Project Map(s) to a 3D Globe 
 + [ ] Upscale / Super-Resolution (AI)
 + [ ] Smart texturing (AI)
 ### Simulation `sim`
+<!-- Talk about types of terrains: https://www.youtube.com/watch?v=G83dkjtnjlw -->
+<!-- Talk about drainage patterns: https://www.youtube.com/watch?v=Xpmy0YLMvo4 -->
 + [X] Wet Erosion: Eroding the local area to create stone-like effect from noise.
 + [ ] 👨🏻‍🔧 _**NEXT**_: [Hydraulic Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
 + [ ] [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
@@ -153,6 +155,8 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] River Dynamics Simulation & Erosion
 + [ ] Snow Deposition
 + [ ] [Large Terrains with Tectonic Uplift and Fluvial Erosion](https://inria.hal.science/hal-01262376/document)
++ [ ] [Simple Tectonics](https://www.youtube.com/watch?v=GjaZ7GIIl54)
+<!-- What about wind erosion? -->
 ### Geo Primitives
 + [X] Hill
 <!--
@@ -189,7 +193,7 @@ Clone the repository or download it as a zip. Create or open a local Python envi
 ## 🤝🏻 Contribute
 **There is much to do.** The plan:
 1. Implement various terrain generation algorithms and tools quickly in Python.
-2. Once we have a capable collection, optimize the performance for real-time and large scales.
+2. Optimize the performance for real-time and large scales by improving the algorithms, using C, and the GPU.
 3. Create a GUI interface.
 
  At this point, Terra is pretty much just educational. But it doesn't have to be. Leave your mark and add to this Python library. You know how it goes. You found a bug? Add an issue. Any ideas for improvement or feeling the need to add more features? Clone the repository, make the changes, and submit a pull request, or...
