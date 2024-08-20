@@ -2,7 +2,7 @@ from terra.sim import *
 from terra.render import *
 from terra.tess import *
 from terra.randd import *
-S=69; X = 2000; Y = 2000
+S=69; X = 500; Y = 500
 large = Voronoi(X, Y, 0.00005, 1, seed=S)
 large = tess_heightmap(large, (X, Y), perlin(X, Y, scale=500, octaves=3, persistence=0.35, lacunarity=2.5, seed=S))
 large = warp(large, (X,Y), warp_strength=50.0, seed=S)

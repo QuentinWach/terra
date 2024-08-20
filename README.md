@@ -20,25 +20,25 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 </div>
 
 ## Examples
-![](docs/render_2_1.png)
-**Example 1. Lakes and Mountains.** The heightmap and colormap were generated with _Terra_ using the code below then exported and rendered in Blender. Fractal Perlin noise is used to generate the terrain. In order to make the terrain more mountain-like, a custom pointify filter is applied on every level of the Perlin noise.
+![](docs/render_3.png)
+**Example 1. Eroded Mountains.** The heightmap and colormap were generated with _Terra_ using the code below then exported and rendered in Blender. Fractal Perlin noise is used to generate the terrain. In order to make the terrain more mountain-like, a custom pointify filter is applied on every level of the Perlin noise. Lastly, we simulate 20,000 particles for hydraulic erosion.
 ```python
-terrain = pointy_perlin(X=1000, Y=1000, scale=200, octaves=5, persistence=0.35, 
-                        lacunarity=2.5, pointiness=0.5, pointilarity=0.5)
-terrain_normal = normal_map(terrain)
-export(terrain, 'terrain.png', cmap="Greys_r", dpi=300)
-export(terrain, 'terrain_color.png', cmap=terrain_cmap(), dpi=300)
+heightmap = pointy_perlin(X=450, Y=450, scale=100)
+eroded_heightmap, path_map = erode(heightmap, num_iterations=20000)
+export(heightmap, 'terrain.png', cmap='Greys_r')
+export(eroded_heightmap, 'erosion.png', cmap='Greys_r')
+export(eroded_heightmap, "erosion_color.png", cmap=terrain_cmap())
+export(np.log1p(path_map), 'path_map.png', cmap='Blues')
 ```
-
+As you can see, it only takes two lines to create the terrain! Everything else is just exporting the various maps that are generated. Below is a more simpler example showing some of the maps:
 
 ![](docs/height_colour_normal_example.png)
 **Example 2. A Tiny Island.** Using fractal Perlin noise with the pointify effect at every level, a simple island can be generated effortlessly. The image here shows the heightmap, the colourmap, and normal map generated with _Terra_. 
 ```python
-terrain = hill(500, 500) # create the island heightmap
-normal_map = normal_map(terrain) # calculate the normals
-export(terrain, "hill.png", cmap="Greys_r")
-export(terrain, "hill_coloured.png", cmap=terrain_cmap())
-export(normal_map, "hill_normal.png", cmap="viridis")
+island = hill(500, 500)
+export(island, "hill.png", cmap="Greys_r")
+export(island, "hill_coloured.png", cmap=terrain_cmap())
+export(normal_map(island), "hill_normal.png", cmap="viridis")
 ```
 
 ---
@@ -144,8 +144,8 @@ The [example shown above](#example) involved various steps. With very few functi
 ### Simulation `sim`
 <!-- Talk about types of terrains: https://www.youtube.com/watch?v=G83dkjtnjlw -->
 <!-- Talk about drainage patterns: https://www.youtube.com/watch?v=Xpmy0YLMvo4 -->
-+ [X] Wet Erosion: Eroding the local area to create stone-like effect from noise.
-+ [ ] 👨🏻‍🔧 _**NEXT**_: [Hydraulic Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
++ [X] Wet Erosion: Eroding the local area with an asymmtric kernel to create stone-like effect from noise.
++ [X] [Hydraulic Single-Particle Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
 + [ ] [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
 + [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines
 + [ ] [Real-Time Erosion with Lake Generation](https://www.youtube.com/watch?v=Ds7R6UzMTXI) ([Paper](https://inria.hal.science/inria-00402079))
@@ -181,6 +181,10 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Slump
 + [ ] Dunes
 + [ ] Plates
+-->
+<!--
++ [ ] Planetary Cloud/Weather Simulation
++ [ ] Globe Light Scattering and Diffraction like S. Lague 
 -->
 ---
 ## Get Started
