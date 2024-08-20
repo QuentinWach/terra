@@ -20,10 +20,10 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 </div>
 
 ## Examples
-![](docs/render_3.png)
+![](docs/render_4.png)
 **Example 1. Eroded Mountains.** The heightmap and colormap were generated with _Terra_ using the code below then exported and rendered in Blender. Fractal Perlin noise is used to generate the terrain. In order to make the terrain more mountain-like, a custom pointify filter is applied on every level of the Perlin noise. Lastly, we simulate 20,000 particles for hydraulic erosion.
 ```python
-heightmap = pointy_perlin(X=450, Y=450, scale=100)
+heightmap = pointy_perlin(X=600, Y=600, scale=100)
 eroded_heightmap, path_map = erode(heightmap, num_iterations=20000)
 export(heightmap, 'terrain.png', cmap='Greys_r')
 export(eroded_heightmap, 'erosion.png', cmap='Greys_r')
@@ -134,7 +134,6 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Gradient of Map
 + [X] Divergence of Map
 + [ ] Import (i.e. to import images to be used as height maps, filters, assets etc.)
-+ [ ] Kernel Filters (Blur, Gaussian Blur, Sharpen, Custom, ...)
 + [ ] Terrace Filter (Creating Steps Given a Height Map)
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
 + [ ] 2D Cartography Map Generator
@@ -144,7 +143,6 @@ The [example shown above](#example) involved various steps. With very few functi
 ### Simulation `sim`
 <!-- Talk about types of terrains: https://www.youtube.com/watch?v=G83dkjtnjlw -->
 <!-- Talk about drainage patterns: https://www.youtube.com/watch?v=Xpmy0YLMvo4 -->
-+ [X] Wet Erosion: Eroding the local area with an asymmtric kernel to create stone-like effect from noise.
 + [X] [Hydraulic Single-Particle Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
 + [ ] [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
 + [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines

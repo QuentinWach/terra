@@ -1,14 +1,15 @@
 # Example usage:
 from terra.sim import  pointy_perlin
-from terra.render import export, terrain_cmap
+from terra.render import export, terrain_cmap, normal_map
 from terra.new_erosion import erode
 import matplotlib.pyplot as plt
 import numpy as np
 
-heightmap = pointy_perlin(X=450, Y=450, scale=100)
+heightmap = pointy_perlin(X=600, Y=600, scale=200)
 export(heightmap, 'terrain.png', cmap='Greys_r')
 eroded_heightmap, path_map = erode(heightmap, num_iterations=20000)
 export(eroded_heightmap, 'erosion.png', cmap='Greys_r')
+export(normal_map(eroded_heightmap), 'erosion_normal.png', cmap='viridis')
 export(eroded_heightmap, "erosion_color.png", cmap=terrain_cmap())
 export(np.log1p(path_map), 'path_map.png', cmap='Blues')
 
