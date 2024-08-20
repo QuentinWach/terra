@@ -1,6 +1,6 @@
 # Example usage:
 from terra.sim import  pointy_perlin
-from terra.render import export, terrain_cmap, gras_gradient, snow_gradient
+from terra.render import export, import_map, terrain_cmap, gras_gradient, snow_gradient
 from terra.new_erosion import erode
 import matplotlib.pyplot as plt
 import numpy as np
