@@ -130,9 +130,9 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Normal Map Calculation
 + [X] Gradient of Map
 + [X] Divergence of Map
-+ [ ] 🔨_NEXT:_ Gras Shader: Grow Gras Only on Flat, Low Areas
-+ [ ] 🔨_NEXT:_ Advanced Terrain Texturing
-+ [ ] 🔨_NEXT:_ Snow Deposition
++ [ ] 🔨 _NEXT:_ Gras Shader: Grow Gras Only on Flat, Low Areas
++ [ ] 🔨 _NEXT:_ Advanced Terrain Texturing
++ [ ] 🔨 _NEXT:_ Snow Deposition
 + [ ] Import (i.e. to import images to be used as height maps, filters, assets etc.)
 + [ ] Terrace Filter (Creating Steps Given a Height Map)
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
