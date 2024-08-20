@@ -144,7 +144,7 @@ The [example shown above](#example) involved various steps. With very few functi
 <!-- Talk about types of terrains: https://www.youtube.com/watch?v=G83dkjtnjlw -->
 <!-- Talk about drainage patterns: https://www.youtube.com/watch?v=Xpmy0YLMvo4 -->
 + [X] [Hydraulic Single-Particle Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
-+ [ ] 🔨_NEXT:_ Optimized Erosion Rain Pattern: Rain Only Over Mountain Peaks to Speed Up the Erosion Effect
++ [ ] 🔨 _NEXT:_ Optimized Erosion Rain Pattern: Rain Only Over Mountain Peaks to Speed Up the Erosion Effect
 + [ ] [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
 + [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines
 + [ ] [Real-Time Erosion with Lake Generation](https://www.youtube.com/watch?v=Ds7R6UzMTXI) ([Paper](https://inria.hal.science/inria-00402079))
