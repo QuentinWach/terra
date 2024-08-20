@@ -5,9 +5,9 @@ from terra.new_erosion import erode
 import matplotlib.pyplot as plt
 import numpy as np
 
-heightmap = pointy_perlin(X=600, Y=600, scale=200)
+heightmap = pointy_perlin(X=1200, Y=1200, scale=350)
 export(heightmap, 'terrain.png', cmap='Greys_r')
-eroded_heightmap, path_map = erode(heightmap, num_iterations=20000)
+eroded_heightmap, path_map = erode(heightmap, num_iterations=60000, max_droplet_lifetime=100)
 export(eroded_heightmap, 'erosion.png', cmap='Greys_r')
 export(normal_map(eroded_heightmap), 'erosion_normal.png', cmap='viridis')
 export(eroded_heightmap, "erosion_color.png", cmap=terrain_cmap())

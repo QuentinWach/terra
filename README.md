@@ -121,9 +121,6 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Voronoi Tesselation
 + [X] Tesselation Relaxation with Fortune's Algorithm
 + [X] Tesselated Height Map with Constant Elevation per Cell
-+ [ ] Tesselated Height Map with Linear Gradient per Cell
-+ [ ] Einstein Tiling for Infinite Non-Repeating Terrains
-+ [ ] Meshing to create 3D objects
 ### Rendering `render`
 + [X] Linear Gradient
 + [X] Whittaker Biome Classification and Colormap
@@ -133,6 +130,9 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Normal Map Calculation
 + [X] Gradient of Map
 + [X] Divergence of Map
++ [ ] 🔨_NEXT:_ Gras Shader: Grow Gras Only on Flat, Low Areas
++ [ ] 🔨_NEXT:_ Advanced Terrain Texturing
++ [ ] 🔨_NEXT:_ Snow Deposition
 + [ ] Import (i.e. to import images to be used as height maps, filters, assets etc.)
 + [ ] Terrace Filter (Creating Steps Given a Height Map)
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
@@ -144,6 +144,7 @@ The [example shown above](#example) involved various steps. With very few functi
 <!-- Talk about types of terrains: https://www.youtube.com/watch?v=G83dkjtnjlw -->
 <!-- Talk about drainage patterns: https://www.youtube.com/watch?v=Xpmy0YLMvo4 -->
 + [X] [Hydraulic Single-Particle Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
++ [ ] 🔨_NEXT:_ Optimized Erosion Rain Pattern: Rain Only Over Mountain Peaks to Speed Up the Erosion Effect
 + [ ] [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
 + [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines
 + [ ] [Real-Time Erosion with Lake Generation](https://www.youtube.com/watch?v=Ds7R6UzMTXI) ([Paper](https://inria.hal.science/inria-00402079))
@@ -151,7 +152,6 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Object Scattering (e.g. rocks)
 + [ ] River Networks
 + [ ] River Dynamics Simulation & Erosion
-+ [ ] Snow Deposition
 + [ ] [Large Terrains with Tectonic Uplift and Fluvial Erosion](https://inria.hal.science/hal-01262376/document)
 + [ ] [Simple Tectonics](https://www.youtube.com/watch?v=GjaZ7GIIl54)
 <!-- What about wind erosion? -->
@@ -186,10 +186,7 @@ The [example shown above](#example) involved various steps. With very few functi
 -->
 ---
 ## Get Started
-Clone the repository or download it as a zip. Create or open a local Python environment (I recommend Anaconda) and install the dependencies `dependencies.txt`. Go to the root directory and run `python -m examples.example_1` to test out the example given above or just explore the functions provided in the subdirectories to create various textures.
-
->[!Note]
-> For now, _Terra_ only provides basic 2D rendering of the created maps and various effects and relies on Matplotlib for 3D rendering which is extremely slow. Export the maps you generate to Blender or any other 3D program of your choice then use displacement and color nodes etc. to create the landscapes.
+Clone the repository or download it as a zip. Create or open a local Python environment (I recommend Anaconda) and install the dependencies `dependencies.txt`.
 
 ---
 ## 🤝🏻 Contribute

@@ -2,7 +2,6 @@ import numpy as np
 import math
 from tqdm import tqdm
 
-
 def erode(heightmap, num_iterations=1, seed=None, erosion_radius=5, inertia=0.25, sediment_capacity_factor=20,
           min_sediment_capacity=0.01, erode_speed=0.7, deposit_speed=0.2, evaporate_speed=0.05, gravity=10,
           max_droplet_lifetime=30, initial_water_volume=2, initial_speed=1):
@@ -191,8 +190,10 @@ def erode(heightmap, num_iterations=1, seed=None, erosion_radius=5, inertia=0.25
 
     return heightmap, path_map
 
-
 def deposit_to_node(heightmap, pos_x, pos_y, amount, mapSize):
+    """
+    Calculates the amount of sediment to deposit to the four nodes of the cell.
+    """
     node_x, node_y = int(pos_x), int(pos_y)
     cell_offset_x, cell_offset_y = pos_x - node_x, pos_y - node_y
 
@@ -207,12 +208,6 @@ def deposit_to_node(heightmap, pos_x, pos_y, amount, mapSize):
 def calculate_height_and_gradient(nodes, map_size, pos_x, pos_y):
     """
     Calculates the height and gradient at a given position on the heightmap.
-
-    Args:
-    - nodes (numpy.ndarray): The heightmap.
-    - map_size (int): The size of the heightmap.
-    - pos_x (float): The x-coordinate of the position.
-    - pos_y (float): The y-coordinate of the position.
     """
     coord_x, coord_y = int(pos_x), int(pos_y)
     x, y = pos_x - coord_x, pos_y - coord_y
@@ -234,10 +229,6 @@ def initialize_brush_indices(map_size, radius):
     This function initializes the indices and weights of the erosion brush 
     used to erode the terrain. The erosion brush is a circular area around
     the current droplet position that determines which nodes are eroded.
-
-    Args:
-    - map_size (int): The size of the heightmap.
-    - radius (int): The radius of the erosion brush.
     """
     erosion_brush_indices = [[] for _ in range(map_size * map_size)]
     erosion_brush_weights = [[] for _ in range(map_size * map_size)]
@@ -268,4 +259,3 @@ def initialize_brush_indices(map_size, radius):
                 erosion_brush_indices[i].append((y_offsets[j] + centre_y) * map_size + x_offsets[j] + centre_x)
                 erosion_brush_weights[i].append(weights[j] / weight_sum)
     return erosion_brush_indices, erosion_brush_weights
-
