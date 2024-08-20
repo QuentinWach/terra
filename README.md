@@ -15,7 +15,7 @@ Maintained by [Quentin Wach](https://www.x.com/QuentinWach).
 [![GitHub latest commit](https://badgen.net/github/last-commit/QuentinWach/terra)](https://github.com/QuentinWach/terra/commits/main)
 <!--[![Discord](https://img.shields.io/discord/1068976834382925865)](https://discord.gg/ZjZadyC7PK)-->
 
-**_Terra_ provides you with various physics simulations, tesselations, filters, presets, and more to generate realistic terrains.** (It's pretty bad right now but getting better!)
+**_Terra_ provides various physics simulations, geological primitives, tesselations, filters, and more to generate realistic terrains.** (It's pretty bad right now but getting better!)
 
 </div>
 
