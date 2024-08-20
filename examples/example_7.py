@@ -11,11 +11,3 @@ normal_map = normal_map(terrain) # calculate the normals
 shadow_map = shadow_map(normal_map) # calculate the shadows
 erosion_map = terrain_before - terrain # calculate the erosion map
 export(erosion_map, "erosion_map.png", cmap="Greys_r")
-
-
-# solar-globe dynamics
-# globe kinematics (size, density, gravity, rotation, heat, etc.)
-# tectonics (plates, faults, mountains, volcanoes, earthquakes, etc.)
-# climate (temperature, precipitation, wind, etc.)
-# hydrology and wind (erosion rivers, lakes, oceans, currents, etc.)
-

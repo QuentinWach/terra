@@ -249,3 +249,38 @@ def shadow_map(normal_map, light_dir=[1, 1, 1]):
     # Clamp the values to [0, 1]
     shadow_map = np.clip(dot_product, 0, 1)
     return shadow_map
+
+def gras_gradient(heightmap, strength=1, cutoff=0.3, blur=5):
+    """
+    Creates a gras texture based on the gradient of the heightmap.
+    Only growing gras where the gradient is low.
+    """
+    grad = gradient(heightmap)
+    gras = np.ones_like(heightmap)
+    for y in range(heightmap.shape[0]):
+        for x in range(heightmap.shape[1]):
+            if grad[y, x] < cutoff:
+                gras[y, x] = -strength*grad[y, x]
+    gras = gaussian_blur(gras, sigma=blur)
+    return gras
+
+def snow_gradient(heightmap, strength=1, cutoff=0.3, blur=0):
+    """
+    Creates a snow texture based on the gradient and height of the heightmap.
+    Only growing snow where the gradient is low and the height is high.
+    """
+    grad = gradient(heightmap)
+    snow = np.zeros_like(heightmap)
+    for y in range(heightmap.shape[0]):
+        for x in range(heightmap.shape[1]):
+            if grad[y, x] < cutoff:
+                snow[y, x] = strength*grad[y, x]*heightmap[y, x]**2
+    if blur > 0:
+        snow = gaussian_blur(snow, sigma=blur)
+    return snow
+
+def import_map(dir):
+    """
+    Import a png file as a numpy array.
+    """
+    return plt.imread(dir)[:, :, 0]

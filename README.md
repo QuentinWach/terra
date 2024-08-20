@@ -130,10 +130,10 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Normal Map Calculation
 + [X] Gradient of Map
 + [X] Divergence of Map
-+ [ ] 🔨 _NEXT:_ Gras Shader: Grow Gras Only on Flat, Low Areas
-+ [ ] 🔨 _NEXT:_ Advanced Terrain Texturing
-+ [ ] 🔨 _NEXT:_ Snow Deposition
-+ [ ] Import (i.e. to import images to be used as height maps, filters, assets etc.)
++ [X] Import (i.e. to import images to be used as height maps, filters, assets etc.)
++ [X] Gras Shader: Grow Gras Only on Flat, Low Areas
++ [X] Snow Deposition
++ [ ] 🔨 _NEXT:_ Advanced Terrain CMap
 + [ ] Terrace Filter (Creating Steps Given a Height Map)
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
 + [ ] 2D Cartography Map Generator
@@ -153,7 +153,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] River Networks
 + [ ] River Dynamics Simulation & Erosion
 + [ ] [Large Terrains with Tectonic Uplift and Fluvial Erosion](https://inria.hal.science/hal-01262376/document)
-+ [ ] [Simple Tectonics](https://www.youtube.com/watch?v=GjaZ7GIIl54)
++ [ ] [Simple Tectonics](https://www.youtube.com/watch?v=GjaZ7GIIl54) ([Helpful Intro](https://www.youtube.com/watch?v=x_Tn66PvTn4))
 <!-- What about wind erosion? -->
 ### Geo Primitives
 + [X] Hill
@@ -184,6 +184,11 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Planetary Cloud/Weather Simulation
 + [ ] Globe Light Scattering and Diffraction like S. Lague 
 -->
+--
+## Other Links
++ [World Building Pasta](https://worldbuildingpasta.blogspot.com/). A phenomal and indepth blog about everything that shapes planets, their terrain, and how to create new worlds yourself.
++ 
+
 ---
 ## Get Started
 Clone the repository or download it as a zip. Create or open a local Python environment (I recommend Anaconda) and install the dependencies `dependencies.txt`.
