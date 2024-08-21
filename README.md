@@ -158,6 +158,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] River Dynamics Simulation & Erosion
 + [ ] [Large Terrains with Tectonic Uplift and Fluvial Erosion](https://inria.hal.science/hal-01262376/document)
 + [ ] [Simple Tectonics](https://www.youtube.com/watch?v=GjaZ7GIIl54) ([Helpful Intro](https://www.youtube.com/watch?v=x_Tn66PvTn4))
+
 <!-- What about wind erosion? -->
 ### Geo Primitives
 + [X] Hill
@@ -188,6 +189,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Planetary Cloud/Weather Simulation
 + [ ] Globe Light Scattering and Diffraction like S. Lague 
 -->
+
 --
 ## Other Links
 + [World Building Pasta](https://worldbuildingpasta.blogspot.com/). A phenomenal and in-depth blog about everything that shapes planets, their terrain, and how to create new worlds yourself.
