@@ -105,9 +105,10 @@ tesselate
 -->
 
 ## Features
-The [example shown above](#example) involved various steps. With very few functions, _Terra_ still offers a lot of flexibility in creating terrains. A typical workflow may look like this:
-
+The [example shown above](#example) involved various steps. With very few functions, _Terra_ still offers a lot of flexibility in creating terrains. 
+<!--A typical workflow may look like this:
 ![alt text](docs/workflow.png)
+-->
 
 ### Randomness `random`
 + [X] Normal Distribution
@@ -117,6 +118,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Warping
 + [X] [Pointify](https://www.youtube.com/watch?v=gsJHzBTPG0Y)
 + [X] Pointy Perlin
++ [ ] Texture Perlin: Uses Perlin Noise to Blend Between Textures (like different types of rocks)
 ### Tesselation `tess`
 + [X] Voronoi Tesselation
 + [X] Tesselation Relaxation with Fortune's Algorithm
@@ -149,6 +151,8 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines
 + [ ] [Real-Time Erosion with Lake Generation](https://www.youtube.com/watch?v=Ds7R6UzMTXI) ([Paper](https://inria.hal.science/inria-00402079))
 + [ ] [Fast Hydraulic-Thermal Erosion On the GPU](https://old.cescg.org/CESCG-2011/papers/TUBudapest-Jako-Balazs.pdf)
++ [ ] 2D Fluid Simulation Constrained by the Heightmap
++ [ ] 3D Fluid Simulation with Actual 3D Terrain
 + [ ] Object Scattering (e.g. rocks)
 + [ ] River Networks
 + [ ] River Dynamics Simulation & Erosion
@@ -186,8 +190,7 @@ The [example shown above](#example) involved various steps. With very few functi
 -->
 --
 ## Other Links
-+ [World Building Pasta](https://worldbuildingpasta.blogspot.com/). A phenomal and indepth blog about everything that shapes planets, their terrain, and how to create new worlds yourself.
-+ 
++ [World Building Pasta](https://worldbuildingpasta.blogspot.com/). A phenomenal and in-depth blog about everything that shapes planets, their terrain, and how to create new worlds yourself.
 
 ---
 ## Get Started
