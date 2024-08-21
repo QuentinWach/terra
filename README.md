@@ -190,7 +190,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] Globe Light Scattering and Diffraction like S. Lague 
 -->
 
---
+---
 ## Other Links
 + [World Building Pasta](https://worldbuildingpasta.blogspot.com/). A phenomenal and in-depth blog about everything that shapes planets, their terrain, and how to create new worlds yourself.
 
