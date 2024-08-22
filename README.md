@@ -118,7 +118,12 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Warping
 + [X] [Pointify](https://www.youtube.com/watch?v=gsJHzBTPG0Y)
 + [X] Pointy Perlin
+<!--
 + [ ] Texture Perlin: Uses Perlin Noise to Blend Between Textures (like different types of rocks)
+  + https://polyhaven.com/textures/rock
+  + https://www.sketchuptextureclub.com/textures/nature-elements/soil/mud
+  + https://medialoot.com/blog/seamless-rock-textures/
+-->
 ### Tesselation `tess`
 + [X] Voronoi Tesselation
 + [X] Tesselation Relaxation with Fortune's Algorithm
@@ -136,54 +141,66 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Gras Shader: Grow Gras Only on Flat, Low Areas
 + [X] Snow Deposition
 + [ ] 🔨 _NEXT:_ Advanced Terrain CMap
+
+<!--
 + [ ] Terrace Filter (Creating Steps Given a Height Map)
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
 + [ ] 2D Cartography Map Generator
 + [ ] Project Map(s) to a 3D Globe 
 + [ ] Upscale / Super-Resolution (AI)
 + [ ] Smart texturing (AI)
+-->
 ### Simulation `sim`
 <!-- Talk about types of terrains: https://www.youtube.com/watch?v=G83dkjtnjlw -->
 <!-- Talk about drainage patterns: https://www.youtube.com/watch?v=Xpmy0YLMvo4 -->
 + [X] [Hydraulic Single-Particle Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
 + [ ] 🔨 _NEXT:_ Optimized Erosion Rain Pattern: Rain Only Over Mountain Peaks to Speed Up the Erosion Effect
-+ [ ] [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
++ [ ] 🔨 _NEXT:_ [Fractal Pixel Mountain Generation](https://www.youtube.com/watch?v=gsJHzBTPG0Y)
++ [ ] 🔨 _NEXT:_ [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
+
+<!--
 + [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines
++ [ ] [Interactive Terrain Modeling Using Hydraulic Erosion](https://cgg.mff.cuni.cz/~jaroslav/papers/2008-sca-erosim/2008-sca-erosiom-fin.pdf)
 + [ ] [Real-Time Erosion with Lake Generation](https://www.youtube.com/watch?v=Ds7R6UzMTXI) ([Paper](https://inria.hal.science/inria-00402079))
 + [ ] [Fast Hydraulic-Thermal Erosion On the GPU](https://old.cescg.org/CESCG-2011/papers/TUBudapest-Jako-Balazs.pdf)
-+ [ ] 2D Fluid Simulation Constrained by the Heightmap
++ [ ] [Wind Erosion](https://nickmcd.me/2022/10/01/procedural-wind-and-clouds-using-gpu-accelerated-lattice-boltzmann-method/)
++ [ ] [Multiple Soil Layer Simulations](https://github.com/weigert/SoilMachine)
++ [ ] [Procedural Weather Patterns](https://nickmcd.me/2018/07/10/procedural-weather-patterns/)
++ [ ] [Clustered Convection for Plate Tectonics](https://nickmcd.me/2020/12/03/clustered-convection-for-simulating-plate-tectonics/)
++ [ ] 2D Fluid Simulation Constrained by the Height Map
 + [ ] 3D Fluid Simulation with Actual 3D Terrain
 + [ ] Object Scattering (e.g. rocks)
 + [ ] River Networks
 + [ ] River Dynamics Simulation & Erosion
 + [ ] [Large Terrains with Tectonic Uplift and Fluvial Erosion](https://inria.hal.science/hal-01262376/document)
 + [ ] [Simple Tectonics](https://www.youtube.com/watch?v=GjaZ7GIIl54) ([Helpful Intro](https://www.youtube.com/watch?v=x_Tn66PvTn4))
+-->
 
-<!-- What about wind erosion? -->
 ### Geo Primitives
 + [X] Hill
++ [ ] 🔨 _NEXT:_ Mountains
++ [ ] 🔨 _NEXT:_ Dunes
+
+<!--
++ [ ] Craters
++ [ ] Lakes
++ [ ] Slump
++ [ ] Plates
+-->
 <!--
 ### Live View
++ [ ] Simple GUI
++ [ ] Show the Maps
++ [ ] Show the 3D Terrain
++ [ ] Zoom
++ [ ] Pan
++ [ ] Rotate
++ [ ] Snap Back
 + [ ] Node editor like: 
   + https://github.com/IndiePython/nodezator ???
   + https://www.youtube.com/watch?v=xbTLhMJARrk&list=PLZSNHzwDCOggHLThIbCxUhWTgrKVemZkz ??
   + https://github.com/bhowiebkr/python-node-editor ??
   + https://www.youtube.com/watch?v=i_pB-Y0hCYQ
-+ [ ] 2D Map Live view
-+ [ ] 3D Render Window that updates live as the maps are updated
-
-### Geo Primitives
-+ [ ] Mountains
-+ [ ] Crators
-+ [ ] Rocks
-+ [ ] Canions
-+ [ ] Rivers
-+ [ ] Lakes
-+ [ ] Island
-+ [ ] Sand
-+ [ ] Slump
-+ [ ] Dunes
-+ [ ] Plates
 -->
 <!--
 + [ ] Planetary Cloud/Weather Simulation

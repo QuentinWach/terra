@@ -180,7 +180,7 @@ def classify_biomes(temperaturemap, shape, precipitationmap):
             biome_map[y, x] = biome
     return biome_map
 
-def export(map, filename, cmap, dpi=300):
+def export(map, filename, cmap, dpi=600):
     """
     Export a heightmap to a PNG file.
     
