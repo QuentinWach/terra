@@ -140,9 +140,10 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Import (i.e. to import images to be used as height maps, filters, assets etc.)
 + [X] Gras Shader: Grow Gras Only on Flat, Low Areas
 + [X] Snow Deposition
-+ [ ] 🔨 _NEXT:_ Advanced Terrain CMap
++ [ ] High-Res Exports for maps for better rendering and re-use
 
 <!--
++ [ ] Advanced Terrain Color Map
 + [ ] Terrace Filter (Creating Steps Given a Height Map)
 + [ ] Materials (i.e. stone, sand, snow, water, grass, ...)
 + [ ] 2D Cartography Map Generator
@@ -154,13 +155,13 @@ The [example shown above](#example) involved various steps. With very few functi
 <!-- Talk about types of terrains: https://www.youtube.com/watch?v=G83dkjtnjlw -->
 <!-- Talk about drainage patterns: https://www.youtube.com/watch?v=Xpmy0YLMvo4 -->
 + [X] [Hydraulic Single-Particle Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
+  + [ ] Optimized Erosion Rain Pattern: Rain Only Over Mountain Peaks to Speed Up the Erosion Effect
 + [ ] 🔨 _NEXT:_ [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
   + [X] First version
-  + [ ] Don't erode the boundaries
+  + [ ] Improve the rain pattern
   + [ ] Fix the common hole-digging error with an add. heuristic
   + [ ] Export the water level
   + [ ] Animate the erosion process
-+ [ ] 🔨 _NEXT:_ Optimized Erosion Rain Pattern: Rain Only Over Mountain Peaks to Speed Up the Erosion Effect
 + [ ] 🔨 _NEXT:_ [Fractal Pixel Mountain Generation](https://www.youtube.com/watch?v=gsJHzBTPG0Y)
 
 <!--
@@ -185,6 +186,9 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Hill
 + [ ] 🔨 _NEXT:_ Mountains
 + [ ] 🔨 _NEXT:_ Dunes
+
+### Manual Edit
++ [ ] Add and subtract by drawing on any map
 
 <!--
 + [ ] Craters

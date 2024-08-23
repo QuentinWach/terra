@@ -9,7 +9,7 @@ Other implementation:
 https://github.com/karhu/terrain-erosion/blob/master/Simulation/FluidSimulation.cpp
 """
 import numpy as np
-from numba import njit
+from numba import njit, prange
 from tqdm import tqdm
 from terra.randd import perlin
 
@@ -238,7 +238,7 @@ def _update(z, h, r, s, fL, fR, fT, fB, dt=0.1, k_c=0.1, k_s=0.1, k_d=0.1, k_e=0
                 # ================================================================
                 # eqn 15
                 # ----------------------------------------------------------------
-                # h[j, i] = h2[j, i] * (1 - K_E * dt)
+                h[j, i] = h2[j, i] * (1 - k_e * dt)
                 # 3.5 evaporation [NEW]
                 # ================================================================
                 # Instead of evaporating proportionally to the amount of water
@@ -247,7 +247,7 @@ def _update(z, h, r, s, fL, fR, fT, fB, dt=0.1, k_c=0.1, k_s=0.1, k_d=0.1, k_e=0
                 # having more water below the surface doesn't increase evaporation.
                 # In the future, we should also take into account air humidity and
                 # air/water temperature.
-                h[j, i] = max(0, h2[j, i] - k_e * dt)
+                #h[j, i] = max(0, h2[j, i] - k_e * dt)
         
             # Not in original paper, it is however present in the code:
             # 3.6 Heuristic to remove sharp peaks/valleys
@@ -256,7 +256,8 @@ def _update(z, h, r, s, fL, fR, fT, fB, dt=0.1, k_c=0.1, k_s=0.1, k_d=0.1, k_e=0
 
     return z, h, s, fL, fR, fT, fB, u, v, g
 
-def erode(heightmap, num_iterations=2, dt=0.1, k_c=0.1, k_s=0.1, k_d=0.1, k_e=0.003, erosion_flag=True):
+def erode(heightmap, num_iterations=2, dt=0.1, k_c=0.1, k_s=0.1, k_d=0.1, 
+          k_e=0.003, erosion_flag=True, R=5, num_droplets=10):
     """
     Hydraulically erode a heightmap.
     
@@ -285,13 +286,34 @@ def erode(heightmap, num_iterations=2, dt=0.1, k_c=0.1, k_s=0.1, k_d=0.1, k_e=0.
     fT = np.zeros_like(z)  # flux towards top neighbor
     fB = np.zeros_like(z)  # flux towards bottom neighbor
     
+    saved_z = []
+    saved_h = []
+    saved_r = []
+
+
+    # Add a erosion source over the mountains
+    #r = 0.04*z.copy() + 0.01*perlin(x, y, scale=0.5*max(x, y), seed=0)
+    # When eroding the entire terrain, randomly change the rainfall pattern.
+    # This helps a lot against hole formation.
+
+    # Precompute rainfall patterns
+    r_base = 0.04 * z + 0.01 * perlin(x, y, scale=0.5*max(x, y), seed=0)
+    r_patterns = [rotate_array(r_base, k) for k in range(4)]
+
+    # Precompute droplets
+    droplet_positions, droplet_mask = precompute_droplets((x, y), num_droplets, R)
+
     for i in tqdm(range(num_iterations)):
-        # Randomly change the rainfall pattern.
-        # This helps a lot against hole formation.
-        r = perlin(X=x, Y=y, scale=0.2*max(x, y), 
-               octaves=1, persistence=0.5, lacunarity=2.0, seed=None)
-        # Add a static river source
-        r = r + perlin(X=x, Y=y, scale=1*max(x, y), octaves=1, seed=None)*perlin(X=x, Y=y, scale=0.1*max(x, y), octaves=1, seed=None)           
+
+        # Rotate rainfall pattern
+        r = r_patterns[i % 4]
+
+        # Add random water droplets
+        #h = add_water_droplets(h, droplet_positions, droplet_mask)
+
+        saved_h.append(h.copy())
+        saved_r.append(r.copy())
+        saved_z.append(z.copy())
         z, h, s, fL, fR, fT, fB, _, _, _ = _update(z, h, r, s, fL, fR, fT, fB, dt, 
                                                    k_c=k_c, k_s=k_s, k_d=k_d, k_e=k_e, erosion_flag=erosion_flag)
         if i % 100 == 0:
@@ -301,4 +323,22 @@ def erode(heightmap, num_iterations=2, dt=0.1, k_c=0.1, k_s=0.1, k_d=0.1, k_e=0.
     #eroded_heightmap = (eroded_heightmap - eroded_heightmap.min()) / (eroded_heightmap.max() - eroded_heightmap.min())
     #eroded_img = Image.fromarray((eroded_heightmap * 255).astype(np.uint8))
     
-    return z, r
+    return saved_z, saved_h, s, saved_r
+
+@njit(parallel=True)
+def add_water_droplets(h, droplet_positions, droplet_mask):
+    for i in prange(len(droplet_positions)):
+        cx, cy = droplet_positions[i]
+        h[cx:cx+droplet_mask.shape[0], cy:cy+droplet_mask.shape[1]] += droplet_mask
+    return h
+
+@njit
+def rotate_array(arr, k):
+    return np.rot90(arr, k)
+
+def precompute_droplets(shape, num_droplets, R):
+    x, y = shape
+    droplet_positions = np.array([(np.random.randint(0, x-2*R), np.random.randint(0, y-2*R)) for _ in range(num_droplets)])
+    y_grid, x_grid = np.ogrid[-R:R+1, -R:R+1]
+    droplet_mask = np.where(x_grid**2 + y_grid**2 <= R**2, 0.1, 0).astype(np.float32)
+    return droplet_positions, droplet_mask
