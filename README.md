@@ -159,9 +159,9 @@ The [example shown above](#example) involved various steps. With very few functi
 + [ ] 🔨 _NEXT:_ [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
   + [X] First version
   + [ ] Improve the rain pattern
+  + [ ] Improve the flux/motion of the water
+  + [ ] Improve evaporation
   + [ ] Fix the common hole-digging error with an add. heuristic
-  + [ ] Export the water level
-  + [ ] Animate the erosion process
 + [ ] 🔨 _NEXT:_ [Fractal Pixel Mountain Generation](https://www.youtube.com/watch?v=gsJHzBTPG0Y)
 
 <!--
