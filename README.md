@@ -130,7 +130,7 @@ The [example shown above](#example) involved various steps. With very few functi
 + [X] Tesselated Height Map with Constant Elevation per Cell
 ### Rendering `render`
 + [X] Linear Gradient
-+ [X] Whittaker Biome Classification and Colormap
++ [X] Whittaker Biome Classification and Color Map
 + [X] 2D Map Export (i.e. to generate a 3D file and render it in Blender)
 + [X] Radial Gradient / Mask
 + [X] Standard Terrain Height Map
@@ -154,9 +154,14 @@ The [example shown above](#example) involved various steps. With very few functi
 <!-- Talk about types of terrains: https://www.youtube.com/watch?v=G83dkjtnjlw -->
 <!-- Talk about drainage patterns: https://www.youtube.com/watch?v=Xpmy0YLMvo4 -->
 + [X] [Hydraulic Single-Particle Terrain Erosion](https://www.youtube.com/watch?v=eaXk97ujbPQ)
++ [ ] 🔨 _NEXT:_ [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
+  + [X] First version
+  + [ ] Don't erode the boundaries
+  + [ ] Fix the common hole-digging error with an add. heuristic
+  + [ ] Export the water level
+  + [ ] Animate the erosion process
 + [ ] 🔨 _NEXT:_ Optimized Erosion Rain Pattern: Rain Only Over Mountain Peaks to Speed Up the Erosion Effect
 + [ ] 🔨 _NEXT:_ [Fractal Pixel Mountain Generation](https://www.youtube.com/watch?v=gsJHzBTPG0Y)
-+ [ ] 🔨 _NEXT:_ [Fast Physically-Based Analytical Erosion](https://www.youtube.com/watch?v=zKnluMlRZNg)
 
 <!--
 + [ ] [Diffusion Limited Aggregation (DLA):](https://www.youtube.com/watch?v=gsJHzBTPG0Y) Mountain Generation with Diffusion Lines

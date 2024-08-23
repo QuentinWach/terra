@@ -11,27 +11,17 @@ https://github.com/karhu/terrain-erosion/blob/master/Simulation/FluidSimulation.
 import numpy as np
 from numba import njit
 from tqdm import tqdm
-
-# Simulation constants
-A_PIPE = 0.6  # virtual pipe cross section
-G = 9.81      # gravitational acceleration
-L_PIPE = 1    # virtual pipe length
-LX = 1        # horizontal distance between grid points
-LY = 1        # vertical distance between grid points
-K_C = 0.1     # sediment capacity constant
-K_S = 0.1     # dissolving constant
-K_D = 0.1     # deposition constant
-K_E = 0.003   # evaporation constant
+from terra.randd import perlin
 
 @njit
-def _update(z, h, r, s, fL, fR, fT, fB, dt, k_c=K_C, k_s=K_S, k_d=K_D, k_e=K_E, erosion_flag=True):
+def _update(z, h, r, s, fL, fR, fT, fB, dt=0.1, k_c=0.1, k_s=0.1, k_d=0.1, k_e=0.003, erosion_flag=True):
     """
     Updates the terrain height, water height, suspended sediment amount,
     and other fields for one time step.
 
     Args:
     - z: 2D numpy array representing the terrain height
-    - h: 2D numpy array representing the water height
+    - h: 2D numpy array representing the water height 
     - r: 2D numpy array representing the rainfall
     - s: 2D numpy array representing the suspended sediment amount
     - fL: 2D numpy array representing the flux towards the left neighbor
@@ -45,6 +35,15 @@ def _update(z, h, r, s, fL, fR, fT, fB, dt, k_c=K_C, k_s=K_S, k_d=K_D, k_e=K_E, 
     - k_e: evaporation constant
     - erosion_flag: flag to enable/disable erosion
     """
+    #####################################################
+    # Simulation constants
+    A_PIPE = 0.6  # virtual pipe cross section
+    G = 9.81      # gravitational acceleration
+    L_PIPE = 1    # virtual pipe length
+    LX = 1        # horizontal distance between grid points
+    LY = 1        # vertical distance between grid points
+    #####################################################
+    # get dimensions
     n_x = z.shape[1]
     n_y = z.shape[0]
     H = z + h  # surface height
@@ -248,7 +247,7 @@ def _update(z, h, r, s, fL, fR, fT, fB, dt, k_c=K_C, k_s=K_S, k_d=K_D, k_e=K_E, 
                 # having more water below the surface doesn't increase evaporation.
                 # In the future, we should also take into account air humidity and
                 # air/water temperature.
-            h[j, i] = max(0, h2[j, i] - k_e * dt)
+                h[j, i] = max(0, h2[j, i] - k_e * dt)
         
             # Not in original paper, it is however present in the code:
             # 3.6 Heuristic to remove sharp peaks/valleys
@@ -257,35 +256,49 @@ def _update(z, h, r, s, fL, fR, fT, fB, dt, k_c=K_C, k_s=K_S, k_d=K_D, k_e=K_E, 
 
     return z, h, s, fL, fR, fT, fB, u, v, g
 
-def erode(heightmap, num_iterations=2, dt=0.1, k_c=K_C, k_e=K_E):
+def erode(heightmap, num_iterations=2, dt=0.1, k_c=0.1, k_s=0.1, k_d=0.1, k_e=0.003, erosion_flag=True):
     """
-    Erode a heightmap using hydraulic erosion.
+    Hydraulically erode a heightmap.
     
-    Parameters:
+    Args:
     - heightmap: 2D numpy array representing the terrain height
     - num_iterations: number of erosion iterations to perform
     - dt: time step for each iteration
     - k_c: sediment capacity constant
+    - k_s: dissolving constant
+    - k_d: deposition constant
     - k_e: evaporation constant
+    - erosion_flag: flag to enable/disable erosion
     
     Returns:
     - eroded_heightmap: 2D numpy array of the eroded terrain
     """
+    # import and normalize the heightmap
     z = heightmap.copy()
+    z = (z - z.min()) / (z.max() - z.min())
+    x, y = z.shape
+
     h = np.zeros_like(z)  # water height
-    r = np.zeros_like(z)  # rainfall (can be modified for specific effects)
     s = np.zeros_like(z)  # suspended sediment amount
-    
     fL = np.zeros_like(z)  # flux towards left neighbor
     fR = np.zeros_like(z)  # flux towards right neighbor
     fT = np.zeros_like(z)  # flux towards top neighbor
     fB = np.zeros_like(z)  # flux towards bottom neighbor
     
-    for _ in tqdm(range(num_iterations)):
-        z, h, s, fL, fR, fT, fB, _, _, _ = _update(z, h, r, s, fL, fR, fT, fB, dt, k_c=k_c, k_e=k_e)
+    for i in tqdm(range(num_iterations)):
+        # Randomly change the rainfall pattern.
+        # This helps a lot against hole formation.
+        r = perlin(X=x, Y=y, scale=0.2*max(x, y), 
+               octaves=1, persistence=0.5, lacunarity=2.0, seed=None)
+        # Add a static river source
+        r = r + perlin(X=x, Y=y, scale=1*max(x, y), octaves=1, seed=None)*perlin(X=x, Y=y, scale=0.1*max(x, y), octaves=1, seed=None)           
+        z, h, s, fL, fR, fT, fB, _, _, _ = _update(z, h, r, s, fL, fR, fT, fB, dt, 
+                                                   k_c=k_c, k_s=k_s, k_d=k_d, k_e=k_e, erosion_flag=erosion_flag)
+        if i % 100 == 0:
+            print(f"Iteration {i}: Max height change: {np.max(np.abs(z - heightmap))}")
 
     # Normalize and convert back to image
     #eroded_heightmap = (eroded_heightmap - eroded_heightmap.min()) / (eroded_heightmap.max() - eroded_heightmap.min())
     #eroded_img = Image.fromarray((eroded_heightmap * 255).astype(np.uint8))
     
-    return z
+    return z, r
