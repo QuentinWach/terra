@@ -219,6 +219,11 @@ The [example shown above](#example) involved various steps. With very few functi
 ---
 ## Other Links
 + [World Building Pasta](https://worldbuildingpasta.blogspot.com/). A phenomenal and in-depth blog about everything that shapes planets, their terrain, and how to create new worlds yourself.
+<!--
+The king of all terrain generation: https://perso.liris.cnrs.fr/eric.galin/articles.html
+https://www.redblobgames.com/maps/terrain-from-noise/
+http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/
+-->
 
 ---
 ## Get Started
